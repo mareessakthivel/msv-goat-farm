@@ -1,0 +1,16 @@
+{
+  "id": "live-goats",
+  "order": 1,
+  "name": "Live Goats for Sale",
+  "slug": "live-goats-for-sale-theni",
+  "href": "/live-goats-for-sale-theni/",
+  "shortDescription": "Farm-raised live goats in Theni, Tamil Nadu. Reach out on WhatsApp or by phone to check current availability and schedule a farm enquiry.",
+  "enquiryLabel": "Enquire for Live Goats",
+  "whatsappMessage": "Hello MSV Goat Farm, I would like to enquire about live goats for sale in Theni. Please share current availability.",
+  "image": {
+    "src": "/images/live-goats/live-goats-elevated-shed.webp",
+    "alt": "Three goats inside an elevated wooden-slatted pen with metal railings at MSV Goat Farm in Theni",
+    "isGenerated": true
+  }
+}
+

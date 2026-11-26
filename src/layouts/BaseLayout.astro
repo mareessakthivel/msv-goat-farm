@@ -1,0 +1,155 @@
+---
+import '@fontsource/manrope/600.css';
+import '@fontsource/manrope/700.css';
+import '@fontsource/manrope/800.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/noto-sans-tamil/400.css';
+import '@fontsource/noto-sans-tamil/600.css';
+import '@fontsource/noto-sans-tamil/700.css';
+import '../styles/global.css';
+
+import { getEntry } from 'astro:content';
+import AnnouncementBar from '../components/common/AnnouncementBar.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import SchemaOrg from '../components/seo/SchemaOrg.astro';
+import type { BreadcrumbItem } from '../components/common/Breadcrumbs.astro';
+import type { FaqItem } from '../components/products/FaqAccordion.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  heroPreloadImage?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  faqs?: FaqItem[];
+  includeWebsiteSchema?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/images/hero/msv-goat-farm-theni-hero.webp',
+  heroPreloadImage,
+  breadcrumbs,
+  faqs,
+  includeWebsiteSchema = false,
+} = Astro.props;
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+const siteOrigin = Astro.site ?? new URL('https://msvgoatfarm.pages.dev');
+const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).href;
+const ogImageUrl = new URL(ogImage, siteOrigin).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/images/logo/apple-touch-icon.png" />
+
+    {
+      heroPreloadImage && (
+        <link
+          rel="preload"
+          as="image"
+          href={heroPreloadImage}
+          type="image/webp"
+          fetchpriority="high"
+        />
+      )
+    }
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="en_IN" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <SchemaOrg
+      siteUrl={siteOrigin}
+      businessName={settings.businessName}
+      locationFull={settings.locationFull}
+      includeWebsite={includeWebsiteSchema}
+      breadcrumbs={breadcrumbs}
+      faqs={faqs}
+      contact={settings.contact}
+    />
+  </head>
+
+  <body id="top">
+    <a href="#main-content" class="skip-link visually-hidden">Skip to main content</a>
+
+    <AnnouncementBar
+      locationShort={settings.locationShort}
+      phoneDisplay={settings.contact.phoneDisplay}
+      phoneConfirmed={settings.contact.phoneConfirmed}
+      whatsappNumber={settings.contact.whatsappNumber}
+      whatsappConfirmed={settings.contact.whatsappConfirmed}
+    />
+
+    <Header
+      businessName={settings.businessName}
+      locationShort={settings.locationShort}
+      navLinks={settings.navLinks}
+      whatsappNumber={settings.contact.whatsappNumber}
+      currentPath={Astro.url.pathname}
+    />
+
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <Footer
+      businessName={settings.businessName}
+      locationFull={settings.locationFull}
+      contact={settings.contact}
+      productLinks={settings.footerProductLinks}
+      legalLinks={settings.footerLegalLinks}
+    />
+
+    <script>
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealNodes = document.querySelectorAll<HTMLElement>('.reveal-on-scroll');
+
+      if (!prefersReducedMotion && 'IntersectionObserver' in window && revealNodes.length > 0) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.setAttribute('data-reveal', 'visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+
+        for (const el of revealNodes) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.92) {
+            el.setAttribute('data-reveal', 'visible');
+          } else {
+            el.setAttribute('data-reveal', 'pending');
+            io.observe(el);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

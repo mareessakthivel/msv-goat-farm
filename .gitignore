@@ -1,0 +1,26 @@
+# Dependencies & build outputs
+node_modules/
+dist/
+.astro/
+.vite/
+.cache/
+
+# Environment & secrets
+.env
+.env.*
+
+# Logs & OS artifacts
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Original reference uploads (never publish or deploy)
+reference-assets/
+
+# Temporary local verification artifacts
+/preview-*.png
+/verify-*.png
+/batch2-*.png
+/phase4-*.png
+scratch/

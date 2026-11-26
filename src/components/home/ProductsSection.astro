@@ -1,0 +1,62 @@
+---
+import Section from '../common/Section.astro';
+import ProductCard from '../products/ProductCard.astro';
+
+export interface ProductItem {
+  id: string;
+  name: string;
+  tamilName?: string;
+  href: string;
+  shortDescription: string;
+  enquiryLabel: string;
+  whatsappMessage: string;
+  image: {
+    src?: string;
+    alt: string;
+    placeholderLabel?: string;
+  };
+}
+
+export interface Props {
+  products: ProductItem[];
+  whatsappNumber: string;
+}
+
+const { products, whatsappNumber } = Astro.props;
+---
+
+<Section id="products" surface="main" class="reveal-on-scroll">
+  <div class="mx-auto mb-10 max-w-2xl text-center space-y-3">
+    <span class="inline-flex items-center rounded-full bg-[#F4FBE9] px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+      Confirmed Farm Offerings
+    </span>
+    <h2 class="m-0 font-heading text-3xl sm:text-4xl font-extrabold text-[#43563A]">
+      Our Products from Theni
+    </h2>
+    <p class="m-0 text-base text-[#58684C]">
+      All orders and enquiries are handled directly via WhatsApp or telephone with MSV Goat Farm —
+      no online cart or public price list.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {
+      products.map((product, index) => (
+        <ProductCard
+          name={product.name}
+          tamilName={product.tamilName}
+          description={product.shortDescription}
+          href={product.href}
+          enquiryLabel={product.enquiryLabel}
+          whatsappNumber={whatsappNumber}
+          whatsappMessage={product.whatsappMessage}
+          imageSrc={product.image.src}
+          imageAlt={product.image.alt}
+          placeholderLabel={product.image.placeholderLabel}
+          wideOnTablet={products.length % 2 === 1 && index === products.length - 1}
+        />
+      ))
+    }
+  </div>
+</Section>
+

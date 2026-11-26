@@ -1,0 +1,41 @@
+---
+import { MessageCircle } from 'lucide-astro';
+import { buildWhatsAppUrl } from '../../utils/whatsapp';
+import Button from './Button.astro';
+
+export interface Props {
+  phoneNumber: string;
+  message: string;
+  label?: string;
+  variant?: 'primary' | 'gold' | 'secondary' | 'outline-light';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  ariaLabel?: string;
+}
+
+const {
+  phoneNumber,
+  message,
+  label = 'Enquire on WhatsApp',
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+  ariaLabel,
+} = Astro.props;
+
+const whatsappHref = buildWhatsAppUrl({ phoneNumber, message });
+---
+
+<Button
+  href={whatsappHref}
+  variant={variant}
+  size={size}
+  target="_blank"
+  rel="noopener noreferrer"
+  class={className}
+  ariaLabel={ariaLabel ?? `${label} via WhatsApp`}
+>
+  <MessageCircle class="size-4 shrink-0" aria-hidden="true" />
+  <span>{label}</span>
+</Button>
+

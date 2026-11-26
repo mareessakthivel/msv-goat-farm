@@ -1,0 +1,59 @@
+---
+export interface Props {
+  href?: string;
+  variant?: 'primary' | 'gold' | 'secondary' | 'outline-light';
+  size?: 'sm' | 'md' | 'lg';
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  target?: string;
+  rel?: string;
+  ariaLabel?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  class: className = '',
+  target,
+  rel,
+  ariaLabel,
+} = Astro.props;
+
+const baseClasses =
+  'brand-btn inline-flex items-center justify-center gap-2 font-heading font-bold rounded-full no-underline transition-colors duration-200 cursor-pointer min-h-[44px] leading-tight select-none';
+
+const sizeClasses: Record<string, string> = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-5 py-2.5 text-[0.9375rem]',
+  lg: 'px-7 py-3.5 text-base',
+};
+
+const variantClasses: Record<string, string> = {
+  primary:
+    'bg-[#438C38] text-white hover:bg-[#35732C] shadow-[0_8px_20px_-8px_rgba(67,140,56,0.5)]',
+  gold: 'bg-gold-gradient text-[#43563A] hover:brightness-95 border border-[#E5B83E]/50 shadow-[0_8px_20px_-8px_rgba(245,201,79,0.55)]',
+  secondary:
+    'bg-white text-[#43563A] border border-[#438C38]/30 hover:bg-[#F4FBE9] hover:border-[#438C38]',
+  'outline-light':
+    'bg-transparent text-[#FFFDF4] border border-[#FFFDF4]/45 hover:bg-white/10',
+};
+
+const classes = [baseClasses, sizeClasses[size], variantClasses[variant], className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+{
+  href ? (
+    <a href={href} class={classes} target={target} rel={rel} aria-label={ariaLabel}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes} aria-label={ariaLabel}>
+      <slot />
+    </button>
+  )
+}
+

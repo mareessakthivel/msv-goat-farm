@@ -1,0 +1,16 @@
+{
+  "id": "uppukandam",
+  "order": 2,
+  "name": "Uppukandam",
+  "tamilName": "உப்புக்கண்டம்",
+  "slug": "uppukandam-theni",
+  "href": "/uppukandam-theni/",
+  "shortDescription": "Traditional dried goat meat (உப்புக்கண்டம்) from MSV Goat Farm in Theni. Contact us directly on WhatsApp to enquire about current batch availability.",
+  "enquiryLabel": "Enquire for Uppukandam",
+  "whatsappMessage": "Hello MSV Goat Farm, I would like to enquire about Uppukandam (உப்புக்கண்டம்) availability and enquiry details.",
+  "image": {
+    "src": "/images/uppukandam/msv-traditional-uppukandam.webp",
+    "alt": "Traditional dried goat meat Uppukandam pieces served on a fresh green banana leaf in an earthen platter under warm natural daylight",
+    "isGenerated": true
+  }
+}

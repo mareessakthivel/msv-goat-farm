@@ -1,0 +1,172 @@
+---
+import { MapPin, Phone, Mail, MessageCircle } from 'lucide-astro';
+import { buildPhoneHref, buildWhatsAppUrl } from '../../utils/whatsapp';
+
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
+export interface Props {
+  businessName: string;
+  locationFull: string;
+  contact: {
+    phoneDisplay: string;
+    phoneConfirmed: boolean;
+    whatsappNumber: string;
+    whatsappConfirmed: boolean;
+    email: string;
+    emailConfirmed: boolean;
+    addressNote: string;
+    addressConfirmed: boolean;
+  };
+  productLinks: FooterLink[];
+  legalLinks: FooterLink[];
+}
+
+const { businessName, locationFull, contact, productLinks, legalLinks } = Astro.props;
+
+const phoneHref = contact.phoneConfirmed ? buildPhoneHref(contact.phoneDisplay) : null;
+const waHref = buildWhatsAppUrl({
+  phoneNumber: contact.whatsappNumber,
+  message: 'Hello MSV Goat Farm, I would like to connect regarding your farm products in Theni.',
+});
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-[#4F6938] text-[#FFFDF4] border-t border-white/15">
+  <div class="mx-auto max-w-[78rem] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <div class="min-w-0 space-y-4">
+        <a href="/" class="inline-flex items-center gap-3 no-underline">
+          <span class="inline-flex size-14 items-center justify-center rounded-full bg-[#FFFDF4] p-1 shadow-md">
+            <img
+              src="/images/logo/msv-goat-farm-logo.webp"
+              alt="MSV Goat Farm official emblem logo"
+              width="52"
+              height="52"
+              loading="lazy"
+              decoding="async"
+              class="size-full object-contain"
+            />
+          </span>
+          <div>
+            <p class="m-0 font-heading text-lg font-extrabold text-[#FFFDF4]">
+              {businessName}
+            </p>
+            <p class="m-0 text-xs text-[#F4FBE9]/85">{locationFull}</p>
+          </div>
+        </a>
+
+        <p class="m-0 text-sm leading-relaxed text-[#F4FBE9]/90">
+          Direct enquiry-based goat farm in Theni, Tamil Nadu offering live goats, traditional
+          Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>), and goat milk.
+        </p>
+      </div>
+
+      <div class="min-w-0">
+        <h2 class="m-0 mb-4 font-heading text-base font-bold text-[#F5C94F]">
+          Explore Farm
+        </h2>
+        <ul class="m-0 list-none space-y-2.5 p-0 text-sm">
+          {
+            productLinks.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="text-[#F4FBE9] no-underline hover:text-[#F5C94F] transition-colors"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="min-w-0">
+        <h2 class="m-0 mb-4 font-heading text-base font-bold text-[#F5C94F]">
+          Location &amp; Enquiry
+        </h2>
+        <ul class="m-0 list-none space-y-3 p-0 text-sm text-[#F4FBE9]/95">
+          <li class="flex items-start gap-2.5">
+            <MapPin class="mt-0.5 size-4 shrink-0 text-[#A8D957]" aria-hidden="true" />
+            <span>{contact.addressConfirmed ? contact.addressNote : locationFull}</span>
+          </li>
+          {
+            phoneHref && (
+              <li class="flex items-center gap-2.5">
+                <Phone class="size-4 shrink-0 text-[#A8D957]" aria-hidden="true" />
+                <a href={phoneHref} class="text-[#FFFDF4] no-underline hover:text-[#F5C94F]">
+                  {contact.phoneDisplay}
+                </a>
+              </li>
+            )
+          }
+          {
+            contact.emailConfirmed && (
+              <li class="flex items-center gap-2.5">
+                <Mail class="size-4 shrink-0 text-[#A8D957]" aria-hidden="true" />
+                <a
+                  href={`mailto:${contact.email}`}
+                  class="text-[#FFFDF4] no-underline hover:text-[#F5C94F]"
+                >
+                  {contact.email}
+                </a>
+              </li>
+            )
+          }
+          <li>
+            <a
+              href="/contact/"
+              class="inline-flex items-center text-sm font-semibold text-[#F5C94F] no-underline hover:underline"
+            >
+              Visit Contact &amp; Enquiry Page &rarr;
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="min-w-0 space-y-4">
+        <h2 class="m-0 font-heading text-base font-bold text-[#F5C94F]">
+          WhatsApp Enquiry
+        </h2>
+        <p class="m-0 text-sm text-[#F4FBE9]/90">
+          Open a prefilled WhatsApp message to ask about current availability directly. No online cart or public pricing.
+        </p>
+        <a
+          href={waHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-gold-gradient px-5 py-2.5 font-heading text-sm font-bold text-[#43563A] no-underline shadow-md hover:brightness-95 transition"
+        >
+          <MessageCircle class="size-4 shrink-0" aria-hidden="true" />
+          <span>Enquire on WhatsApp</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-10 border-t border-white/15 pt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-xs text-[#F4FBE9]/80">
+      <p class="m-0">
+        &copy; {year} {businessName}, {locationFull}. All rights reserved.
+      </p>
+
+      <div class="flex flex-wrap items-center gap-5">
+        {
+          legalLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-[#F4FBE9]/85 no-underline hover:text-[#F5C94F] transition-colors"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <p class="mt-3 mb-0 text-[11px] text-[#F4FBE9]/70">
+      Visual note: Website showcase photography uses AI-generated imagery inspired by MSV Goat Farm and is intended for visual illustration rather than documentary records of specific farm events.
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,97 @@
+---
+import type { BreadcrumbItem } from '../common/Breadcrumbs.astro';
+import type { FaqItem } from '../products/FaqAccordion.astro';
+
+export interface Props {
+  siteUrl: URL;
+  businessName: string;
+  locationFull: string;
+  includeWebsite?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
+  faqs?: FaqItem[];
+  contact?: {
+    phoneDisplay: string;
+    phoneConfirmed: boolean;
+    email: string;
+    emailConfirmed: boolean;
+    addressNote: string;
+    addressConfirmed: boolean;
+  };
+}
+
+const {
+  siteUrl,
+  businessName,
+  locationFull,
+  includeWebsite = false,
+  breadcrumbs,
+  faqs,
+  contact,
+} = Astro.props;
+
+const schemas: Record<string, unknown>[] = [];
+
+if (includeWebsite) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: businessName,
+    url: siteUrl.href,
+  });
+}
+
+if (breadcrumbs && breadcrumbs.length > 0) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.label,
+      item: new URL(crumb.href, siteUrl).href,
+    })),
+  });
+}
+
+if (faqs && faqs.length > 0) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  });
+}
+
+// LocalBusiness structured data is emitted ONLY when verified address and phone details are confirmed
+if (contact?.addressConfirmed && contact?.phoneConfirmed) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: businessName,
+    url: siteUrl.href,
+    telephone: contact.phoneDisplay,
+    ...(contact.emailConfirmed ? { email: contact.email } : {}),
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: contact.addressNote,
+      addressLocality: 'Theni',
+      addressRegion: 'Tamil Nadu',
+      addressCountry: 'IN',
+    },
+    areaServed: locationFull,
+  });
+}
+---
+
+{
+  schemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))
+}
+

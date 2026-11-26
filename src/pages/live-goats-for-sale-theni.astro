@@ -1,0 +1,202 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { CheckCircle2, MessageCircle, Warehouse } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/common/PageHero.astro';
+import Section from '../components/common/Section.astro';
+import WhatsAppButton from '../components/common/WhatsAppButton.astro';
+import Button from '../components/common/Button.astro';
+import FaqAccordion from '../components/products/FaqAccordion.astro';
+import ContactCtaSection from '../components/home/ContactCtaSection.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+const product = (await getCollection('products')).find((p) => p.data.id === 'live-goats')!.data;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Live Goats for Sale', href: '/live-goats-for-sale-theni/' },
+];
+
+const faqs = [
+  {
+    question: 'How do I check which live goats are currently available at MSV Goat Farm?',
+    answer:
+      'Open a WhatsApp enquiry using any button on this page to ask about current availability. Available stock is confirmed directly by the farm.',
+  },
+  {
+    question: 'Are goat breeds, weights, ages, or prices listed online?',
+    answer:
+      'No. MSV Goat Farm does not publish online prices or automated live-stock tables. Breed availability and individual details are shared directly during your WhatsApp or telephone enquiry.',
+  },
+  {
+    question: 'Can I buy online through a shopping cart?',
+    answer:
+      'No. There is no online shopping cart or online payment gateway. All enquiries and arrangements are handled directly with MSV Goat Farm in Theni.',
+  },
+];
+
+const steps = [
+  {
+    title: '1. Open a WhatsApp Enquiry',
+    detail:
+      'Use the prefilled button below to open WhatsApp and review your message before sending it directly to the farm.',
+  },
+  {
+    title: '2. Confirm Current Herd Availability',
+    detail:
+      'Speak directly with MSV Goat Farm in Theni regarding current stock and owner-confirmed breed availability.',
+  },
+  {
+    title: '3. Arrange Next Steps Directly',
+    detail:
+      'Discuss visit timings or collection details directly with the farm owner based on your requirement.',
+  },
+];
+---
+
+<BaseLayout
+  title="Live Goats for Sale in Theni | MSV Goat Farm, Tamil Nadu"
+  description="Enquire about live goats for sale in Theni, Tamil Nadu at MSV Goat Farm. Direct WhatsApp and telephone enquiries with no middlemen."
+  ogImage="/images/live-goats/live-goats-elevated-shed.webp"
+  heroPreloadImage="/images/live-goats/live-goats-elevated-shed.webp"
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="Live Goats • Theni, Tamil Nadu"
+    title="Live Goats for Sale in Theni"
+    description="MSV Goat Farm offers farm-raised live goats in Theni, Tamil Nadu through direct buyer enquiries on WhatsApp and telephone."
+  >
+    <div slot="actions" class="flex flex-wrap items-center gap-3 pt-2">
+      <WhatsAppButton
+        phoneNumber={settings.contact.whatsappNumber}
+        message={product.whatsappMessage}
+        label={product.enquiryLabel}
+        variant="primary"
+        size="lg"
+      />
+      <Button href="/contact/" variant="secondary" size="lg">
+        <span>All Contact Options</span>
+      </Button>
+    </div>
+
+    <figure
+      slot="media"
+      class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_18px_42px_-14px_rgba(67,86,58,0.18)] ring-1 ring-[#43563A]/10"
+    >
+      <img
+        src="/images/live-goats/live-goats-elevated-shed.webp"
+        srcset="/images/live-goats/live-goats-elevated-shed-800.webp 800w, /images/live-goats/live-goats-elevated-shed.webp 1200w"
+        sizes="(max-width: 1024px) 100vw, 42vw"
+        alt={product.image.alt}
+        width="1200"
+        height="900"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
+      />
+      <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
+        Illustrative herd visualization modeled on MSV Goat Farm&rsquo;s elevated pens in Theni.
+      </figcaption>
+    </figure>
+  </PageHero>
+
+  <Section surface="main">
+    <div class="mx-auto mb-8 max-w-2xl text-center space-y-2">
+      <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
+        How Live Goat Enquiries Work
+      </h2>
+      <p class="m-0 text-base text-[#58684C]">
+        Simple, transparent direct communication from initial enquiry to farm confirmation.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        steps.map((step) => (
+          <article class="brand-card rounded-[1.25rem] bg-[#FFFDF4] p-6 ring-1 ring-[#43563A]/10 shadow-[0_8px_24px_-10px_rgba(67,86,58,0.10)]">
+            <h3 class="m-0 font-heading text-lg font-bold text-[#43563A]">{step.title}</h3>
+            <p class="m-0 mt-2 text-sm leading-relaxed text-[#58684C]">{step.detail}</p>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section surface="soft-green">
+    <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
+      <div class="min-w-0 lg:col-span-6">
+        <figure class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_14px_38px_-12px_rgba(67,86,58,0.16)] ring-1 ring-[#43563A]/10">
+          <img
+            src="/images/farm/msv-shed-interior-wooden-slats.webp"
+            srcset="/images/farm/msv-shed-interior-wooden-slats-800.webp 800w, /images/farm/msv-shed-interior-wooden-slats.webp 1200w"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            alt="Interior wooden-slatted goat shed with galvanized feeding troughs along the central aisle"
+            width="1200"
+            height="900"
+            loading="lazy"
+            decoding="async"
+            class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
+          />
+          <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
+            Illustrative shed interior reflecting elevated slatted flooring and aisle feed troughs.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="min-w-0 space-y-5 lg:col-span-6">
+        <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
+          Elevated Pens &amp; Direct Herd Enquiries
+        </h2>
+        <ul class="m-0 list-none space-y-3 p-0 text-sm text-[#58684C]">
+          <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/8">
+            <Warehouse class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <span>
+              Goats are housed in raised slatted-floor pens with tubular metal railings, open-sided
+              ventilation, and dedicated feeding troughs.
+            </span>
+          </li>
+          <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/8">
+            <CheckCircle2 class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <span>
+              Individual goat details and breed confirmation are provided directly by MSV Goat Farm
+              during your WhatsApp or phone conversation.
+            </span>
+          </li>
+          <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/8">
+            <MessageCircle class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <span>
+              Looking for other offerings? Explore{' '}
+              <a href="/uppukandam-theni/" class="font-semibold text-[#438C38] hover:underline">
+                Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>)
+              </a>{' '}
+              or{' '}
+              <a href="/goat-milk-theni/" class="font-semibold text-[#438C38] hover:underline">
+                Goat Milk in Theni
+              </a>
+              .
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section surface="main">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="m-0 mb-6 text-center font-heading text-3xl font-extrabold text-[#43563A]">
+        Live Goat Enquiry FAQs
+      </h2>
+      <FaqAccordion items={faqs} />
+    </div>
+  </Section>
+
+  <ContactCtaSection
+    whatsappNumber={settings.contact.whatsappNumber}
+    phoneDisplay={settings.contact.phoneDisplay}
+    phoneConfirmed={settings.contact.phoneConfirmed}
+  />
+</BaseLayout>

@@ -1,0 +1,163 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { CheckCircle2, MessageCircle } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/common/PageHero.astro';
+import Section from '../components/common/Section.astro';
+import WhatsAppButton from '../components/common/WhatsAppButton.astro';
+import Button from '../components/common/Button.astro';
+import FaqAccordion from '../components/products/FaqAccordion.astro';
+import ContactCtaSection from '../components/home/ContactCtaSection.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+const product = (await getCollection('products')).find((p) => p.data.id === 'uppukandam')!.data;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Uppukandam', href: '/uppukandam-theni/' },
+];
+
+const faqs = [
+  {
+    question: 'How can I enquire about Uppukandam (உப்புக்கண்டம்) from MSV Goat Farm?',
+    answer:
+      'Click any WhatsApp button on this page to open WhatsApp with a prefilled Uppukandam enquiry message and confirm current availability directly with the farm.',
+  },
+  {
+    question: 'Are pack sizes, shelf life, or prices shown on the website?',
+    answer:
+      'No. Product quantities, pricing, and current batch availability are confirmed directly during your WhatsApp or telephone enquiry.',
+  },
+  {
+    question: 'Can I order Uppukandam through an online cart?',
+    answer:
+      'No. This website does not include an online shopping cart or online payment checkout. All enquiries are handled directly with MSV Goat Farm.',
+  },
+];
+---
+
+<BaseLayout
+  title="Uppukandam (உப்புக்கண்டம்) in Theni | MSV Goat Farm"
+  description="Traditional dried goat meat — Uppukandam (உப்புக்கண்டம்) from MSV Goat Farm in Theni, Tamil Nadu. Enquire directly on WhatsApp for availability."
+  ogImage="/images/uppukandam/msv-traditional-uppukandam.webp"
+  heroPreloadImage="/images/uppukandam/msv-traditional-uppukandam.webp"
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="Traditional Product • Theni, Tamil Nadu"
+    title="Uppukandam in Theni"
+    tamilSubtitle="உப்புக்கண்டம்"
+    description="MSV Goat Farm offers traditional dried goat meat — Uppukandam (உப்புக்கண்டம்) — in Theni, Tamil Nadu through direct WhatsApp and telephone enquiries."
+  >
+    <div slot="actions" class="flex flex-wrap items-center gap-3 pt-2">
+      <WhatsAppButton
+        phoneNumber={settings.contact.whatsappNumber}
+        message={product.whatsappMessage}
+        label={product.enquiryLabel}
+        variant="gold"
+        size="lg"
+      />
+      <Button href="/contact/" variant="secondary" size="lg">
+        <span>All Contact Options</span>
+      </Button>
+    </div>
+
+    <figure
+      slot="media"
+      class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_18px_42px_-14px_rgba(67,86,58,0.18)] ring-1 ring-[#43563A]/10"
+    >
+      <img
+        src="/images/uppukandam/msv-traditional-uppukandam.webp"
+        srcset="/images/uppukandam/msv-traditional-uppukandam-800.webp 800w, /images/uppukandam/msv-traditional-uppukandam.webp 1200w"
+        sizes="(max-width: 1024px) 100vw, 42vw"
+        alt={product.image.alt}
+        width="1200"
+        height="900"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
+      />
+      <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
+        Illustrative product photograph representing traditional dried goat meat (Uppukandam).
+      </figcaption>
+    </figure>
+  </PageHero>
+
+  <Section surface="soft-cream">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <article class="brand-card rounded-[1.25rem] bg-white p-6 sm:p-8 ring-1 ring-[#43563A]/10 shadow-sm space-y-3">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          Direct Batch Availability Enquiry
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          Because availability depends on farm stock and current batches, MSV Goat Farm handles
+          Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>) requests directly by WhatsApp or
+          telephone rather than automated online checkout.
+        </p>
+        <ul class="m-0 list-none space-y-2.5 p-0 pt-2 text-sm text-[#58684C]">
+          <li class="flex items-start gap-2.5">
+            <CheckCircle2 class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <span>Confirm current availability directly before visiting or arranging pickup.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <CheckCircle2 class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <span>Discuss quantity and specific product questions directly with the farm owner.</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="brand-card rounded-[1.25rem] bg-white p-6 sm:p-8 ring-1 ring-[#43563A]/10 shadow-sm flex flex-col justify-between gap-5">
+        <div class="space-y-3">
+          <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+            Also from MSV Goat Farm
+          </h2>
+          <p class="m-0 text-base leading-relaxed text-[#58684C]">
+            Explore our other confirmed offerings in Theni, Tamil Nadu:
+          </p>
+          <ul class="m-0 list-none space-y-2 p-0 text-sm">
+            <li>
+              <a
+                href="/live-goats-for-sale-theni/"
+                class="font-heading font-bold text-[#438C38] no-underline hover:underline"
+              >
+                Live Goats for Sale in Theni &rarr;
+              </a>
+            </li>
+            <li>
+              <a
+                href="/goat-milk-theni/"
+                class="font-heading font-bold text-[#438C38] no-underline hover:underline"
+              >
+                Goat Milk in Theni &rarr;
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pt-2 border-t border-[#43563A]/10 flex items-center gap-2 text-xs text-[#58684C]">
+          <MessageCircle class="size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+          <span>Opening WhatsApp lets you review and send your prefilled message directly.</span>
+        </div>
+      </article>
+    </div>
+  </Section>
+
+  <Section surface="main">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="m-0 mb-6 text-center font-heading text-3xl font-extrabold text-[#43563A]">
+        Uppukandam Enquiry FAQs
+      </h2>
+      <FaqAccordion items={faqs} />
+    </div>
+  </Section>
+
+  <ContactCtaSection
+    whatsappNumber={settings.contact.whatsappNumber}
+    phoneDisplay={settings.contact.phoneDisplay}
+    phoneConfirmed={settings.contact.phoneConfirmed}
+  />
+</BaseLayout>

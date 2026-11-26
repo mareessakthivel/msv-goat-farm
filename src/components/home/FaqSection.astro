@@ -1,0 +1,29 @@
+---
+import Section from '../common/Section.astro';
+import FaqAccordion, { type FaqItem } from '../products/FaqAccordion.astro';
+
+export interface Props {
+  faqs: FaqItem[];
+}
+
+const { faqs } = Astro.props;
+---
+
+<Section id="faq" surface="soft-green" class="reveal-on-scroll">
+  <div class="mx-auto max-w-3xl">
+    <div class="mb-8 text-center space-y-3">
+      <span class="inline-flex items-center rounded-full bg-white px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+        Enquiry Guide
+      </span>
+      <h2 class="m-0 font-heading text-3xl sm:text-4xl font-extrabold text-[#43563A]">
+        Frequently Asked Questions
+      </h2>
+      <p class="m-0 text-base text-[#58684C]">
+        Quick answers on how to connect with MSV Goat Farm in Theni.
+      </p>
+    </div>
+
+    <FaqAccordion items={faqs} />
+  </div>
+</Section>
+

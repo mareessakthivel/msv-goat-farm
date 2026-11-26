@@ -1,0 +1,15 @@
+{
+  "id": "goat-milk",
+  "order": 3,
+  "name": "Goat Milk",
+  "slug": "goat-milk-theni",
+  "href": "/goat-milk-theni/",
+  "shortDescription": "Farm-sourced goat milk available by direct enquiry in Theni, Tamil Nadu. Message us on WhatsApp or call to confirm availability.",
+  "enquiryLabel": "Enquire for Goat Milk",
+  "whatsappMessage": "Hello MSV Goat Farm, I would like to enquire about goat milk availability in Theni.",
+  "image": {
+    "src": "/images/goat-milk/msv-goat-milk-product.webp",
+    "alt": "Creamy white goat milk in an unbranded clear glass carafe and cup on a wooden table in a natural South Indian farm setting",
+    "isGenerated": true
+  }
+}

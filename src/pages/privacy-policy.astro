@@ -1,0 +1,78 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/common/PageHero.astro';
+import Section from '../components/common/Section.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Privacy Policy', href: '/privacy-policy/' },
+];
+---
+
+<BaseLayout
+  title="Privacy Policy | MSV Goat Farm, Theni"
+  description="Privacy Policy for the MSV Goat Farm static website in Theni, Tamil Nadu. Learn how website visits and WhatsApp enquiry links are handled."
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="Legal Information"
+    title="Privacy Policy"
+    description="How MSV Goat Farm in Theni, Tamil Nadu handles visitor privacy on this static informational website."
+  />
+
+  <Section surface="main">
+    <div class="mx-auto max-w-3xl space-y-8 rounded-[1.5rem] bg-white p-6 sm:p-10 ring-1 ring-[#43563A]/10 shadow-sm">
+      <section class="space-y-2">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          1. Overview &amp; No Online Accounts
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          This website for {settings.businessName} ({settings.locationFull}) is a static
+          informational website. We do not provide customer registration, login accounts, online
+          shopping carts, or online payment forms on this website.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          2. Information You Share via WhatsApp or Telephone
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          Clicking a WhatsApp enquiry link opens WhatsApp externally with a prefilled message for
+          your convenience. No message is transmitted automatically by this website, and you choose
+          whether to send or modify the message inside WhatsApp. Any details you share during a
+          WhatsApp chat or phone call are used solely to respond to your enquiry.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          3. Hosting Logs &amp; Cookies
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          This website does not set advertising cookies or behavioural tracking profiles. Basic
+          technical request metadata (such as IP address, browser user agent, and request timestamps)
+          may be processed transiently by our static web hosting and edge network provider to deliver
+          pages securely and reliably.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          4. External Links &amp; Contact
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          Third-party services accessed from links on this site (such as WhatsApp) operate under
+          their own privacy policies. If you have questions about this policy, please reach out via
+          our <a href="/contact/" class="font-semibold text-[#438C38] hover:underline">Contact page</a>.
+        </p>
+      </section>
+    </div>
+  </Section>
+</BaseLayout>
+

@@ -1,0 +1,46 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import GoatBreedsView from '../components/pages/GoatBreedsView.astro';
+import AvailableGoatsView from '../components/pages/AvailableGoatsView.astro';
+
+/**
+ * Data-gated conditional routes:
+ * `/goat-breeds/` and `/available-goats/` are emitted ONLY when confirmed owner records exist
+ * in `src/content/breeds/` or `src/content/goats/`. When empty, zero empty HTML pages or
+ * sitemap URLs are published.
+ */
+export async function getStaticPaths() {
+  const confirmedBreeds = (await getCollection('breeds')).filter((b) => b.data.confirmed);
+  const confirmedGoats = (await getCollection('goats')).filter((g) => g.data.confirmed);
+
+  const paths = [];
+
+  if (confirmedBreeds.length > 0) {
+    paths.push({
+      params: { conditional: 'goat-breeds' },
+      props: { kind: 'breeds' as const, breeds: confirmedBreeds, goats: [] },
+    });
+  }
+
+  if (confirmedGoats.length > 0) {
+    paths.push({
+      params: { conditional: 'available-goats' },
+      props: { kind: 'goats' as const, breeds: [], goats: confirmedGoats },
+    });
+  }
+
+  return paths;
+}
+
+const { kind, breeds, goats } = Astro.props;
+const settings = (await getEntry('settings', 'site'))!.data;
+---
+
+{
+  kind === 'breeds' ? (
+    <GoatBreedsView breeds={breeds} whatsappNumber={settings.contact.whatsappNumber} />
+  ) : (
+    <AvailableGoatsView goats={goats} whatsappNumber={settings.contact.whatsappNumber} />
+  )
+}
+

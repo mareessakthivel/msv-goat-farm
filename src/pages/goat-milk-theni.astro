@@ -1,0 +1,161 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { CheckCircle2, MessageCircle } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/common/PageHero.astro';
+import Section from '../components/common/Section.astro';
+import WhatsAppButton from '../components/common/WhatsAppButton.astro';
+import Button from '../components/common/Button.astro';
+import FaqAccordion from '../components/products/FaqAccordion.astro';
+import ContactCtaSection from '../components/home/ContactCtaSection.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+const product = (await getCollection('products')).find((p) => p.data.id === 'goat-milk')!.data;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Goat Milk', href: '/goat-milk-theni/' },
+];
+
+const faqs = [
+  {
+    question: 'How do I check goat milk availability at MSV Goat Farm in Theni?',
+    answer:
+      'Use the WhatsApp enquiry button on this page to open a prefilled message and confirm current goat milk availability directly with the farm.',
+  },
+  {
+    question: 'Are quantities, prices, or delivery details listed online?',
+    answer:
+      'No. MSV Goat Farm shares current availability and enquiry details directly during your WhatsApp or telephone conversation.',
+  },
+  {
+    question: 'Can I book or pay for goat milk online?',
+    answer:
+      'No. There is no online cart, registration, or online payment on this website.',
+  },
+];
+---
+
+<BaseLayout
+  title="Goat Milk in Theni | MSV Goat Farm, Tamil Nadu"
+  description="Enquire about farm-sourced goat milk in Theni, Tamil Nadu at MSV Goat Farm. Direct WhatsApp and telephone enquiries."
+  ogImage="/images/goat-milk/msv-goat-milk-product.webp"
+  heroPreloadImage="/images/goat-milk/msv-goat-milk-product.webp"
+  breadcrumbs={breadcrumbs}
+  faqs={faqs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="Farm Dairy • Theni, Tamil Nadu"
+    title="Goat Milk in Theni"
+    description="Farm-sourced goat milk available through direct enquiry at MSV Goat Farm in Theni, Tamil Nadu. Contact us on WhatsApp or by telephone to confirm availability."
+  >
+    <div slot="actions" class="flex flex-wrap items-center gap-3 pt-2">
+      <WhatsAppButton
+        phoneNumber={settings.contact.whatsappNumber}
+        message={product.whatsappMessage}
+        label={product.enquiryLabel}
+        variant="primary"
+        size="lg"
+      />
+      <Button href="/contact/" variant="secondary" size="lg">
+        <span>All Contact Options</span>
+      </Button>
+    </div>
+
+    <figure
+      slot="media"
+      class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_18px_42px_-14px_rgba(67,86,58,0.18)] ring-1 ring-[#43563A]/10"
+    >
+      <img
+        src="/images/goat-milk/msv-goat-milk-product.webp"
+        srcset="/images/goat-milk/msv-goat-milk-product-800.webp 800w, /images/goat-milk/msv-goat-milk-product.webp 1200w"
+        sizes="(max-width: 1024px) 100vw, 42vw"
+        alt={product.image.alt}
+        width="1200"
+        height="900"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
+      />
+      <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
+        Illustrative product photograph representing farm-sourced goat milk.
+      </figcaption>
+    </figure>
+  </PageHero>
+
+  <Section surface="soft-green">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <article class="brand-card rounded-[1.25rem] bg-white p-6 sm:p-8 ring-1 ring-[#43563A]/10 shadow-sm space-y-3">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          Direct Goat Milk Enquiries
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          Because farm output varies, goat milk availability and enquiry details are confirmed
+          directly by speaking with MSV Goat Farm in Theni.
+        </p>
+        <ul class="m-0 list-none space-y-2.5 p-0 pt-2 text-sm text-[#58684C]">
+          <li class="flex items-start gap-2.5">
+            <CheckCircle2 class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <span>Confirm current availability directly before planning a visit.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <CheckCircle2 class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <span>Direct farm-to-buyer communication via WhatsApp or telephone.</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="brand-card rounded-[1.25rem] bg-white p-6 sm:p-8 ring-1 ring-[#43563A]/10 shadow-sm flex flex-col justify-between gap-5">
+        <div class="space-y-3">
+          <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+            Explore Other Farm Products
+          </h2>
+          <p class="m-0 text-base leading-relaxed text-[#58684C]">
+            MSV Goat Farm also offers:
+          </p>
+          <ul class="m-0 list-none space-y-2 p-0 text-sm">
+            <li>
+              <a
+                href="/live-goats-for-sale-theni/"
+                class="font-heading font-bold text-[#438C38] no-underline hover:underline"
+              >
+                Live Goats for Sale in Theni &rarr;
+              </a>
+            </li>
+            <li>
+              <a
+                href="/uppukandam-theni/"
+                class="font-heading font-bold text-[#438C38] no-underline hover:underline"
+              >
+                Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>) in Theni &rarr;
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pt-2 border-t border-[#43563A]/10 flex items-center gap-2 text-xs text-[#58684C]">
+          <MessageCircle class="size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+          <span>Opening WhatsApp lets you review and send your prefilled message directly.</span>
+        </div>
+      </article>
+    </div>
+  </Section>
+
+  <Section surface="main">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="m-0 mb-6 text-center font-heading text-3xl font-extrabold text-[#43563A]">
+        Goat Milk Enquiry FAQs
+      </h2>
+      <FaqAccordion items={faqs} />
+    </div>
+  </Section>
+
+  <ContactCtaSection
+    whatsappNumber={settings.contact.whatsappNumber}
+    phoneDisplay={settings.contact.phoneDisplay}
+    phoneConfirmed={settings.contact.phoneConfirmed}
+  />
+</BaseLayout>

@@ -1,0 +1,40 @@
+---
+export interface Props {
+  id?: string;
+  surface?: 'main' | 'surface' | 'soft-green' | 'soft-cream' | 'gradient-section' | 'hero';
+  class?: string;
+  containerClass?: string;
+  compact?: boolean;
+}
+
+const {
+  id,
+  surface = 'main',
+  class: className = '',
+  containerClass = '',
+  compact = false,
+} = Astro.props;
+
+const surfaceClasses: Record<string, string> = {
+  main: 'bg-[#FFFDF4]',
+  surface: 'bg-white',
+  'soft-green': 'bg-[#F4FBE9]',
+  'soft-cream': 'bg-[#FFF1D5]',
+  'gradient-section': 'bg-section-gradient',
+  hero: 'bg-hero-gradient',
+};
+
+const paddingClass = compact
+  ? 'py-10 sm:py-12 lg:py-14'
+  : 'py-14 sm:py-16 lg:py-20';
+---
+
+<section
+  id={id}
+  class:list={[surfaceClasses[surface], paddingClass, 'px-4 sm:px-6 lg:px-8', className]}
+>
+  <div class:list={['mx-auto w-full max-w-[78rem]', containerClass]}>
+    <slot />
+  </div>
+</section>
+

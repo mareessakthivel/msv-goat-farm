@@ -1,0 +1,192 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/common/PageHero.astro';
+import Section from '../components/common/Section.astro';
+import WhatsAppButton from '../components/common/WhatsAppButton.astro';
+import ContactCtaSection from '../components/home/ContactCtaSection.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Gallery', href: '/gallery/' },
+];
+
+const galleryItems = [
+  {
+    src: '/images/hero/msv-goat-farm-theni-hero.webp',
+    src800: '/images/hero/msv-goat-farm-theni-hero-800.webp',
+    width: 1600,
+    height: 900,
+    aspect: 'aspect-[16/9]',
+    spanTwo: true,
+    category: 'Farm Overview',
+    title: 'Elevated Goat Shed & Surroundings in Theni',
+    caption: 'Illustrative wide view inspired by MSV Goat Farm’s elevated shed, ramp, and hillside setting.',
+    alt: 'Wide sunlit view of elevated wooden-slatted goat shed with ramp, yellow metal railings, coconut palms, and Theni hills',
+    link: '/about/',
+    linkLabel: 'About the Farm',
+  },
+  {
+    src: '/images/live-goats/live-goats-elevated-shed.webp',
+    src800: '/images/live-goats/live-goats-elevated-shed-800.webp',
+    width: 1200,
+    height: 900,
+    aspect: 'aspect-[4/3]',
+    spanTwo: false,
+    category: 'Live Goats',
+    title: 'Elevated Pen Herd View',
+    caption: 'Illustrative visual of goats inside the farm’s elevated slatted pens.',
+    alt: 'Three goats standing inside an elevated wooden-slatted pen with tubular metal railings',
+    link: '/live-goats-for-sale-theni/',
+    linkLabel: 'Live Goats Page',
+  },
+  {
+    src: '/images/farm/msv-elevated-shed-exterior-ramp.webp',
+    src800: '/images/farm/msv-elevated-shed-exterior-ramp-800.webp',
+    width: 1200,
+    height: 900,
+    aspect: 'aspect-[4/3]',
+    spanTwo: false,
+    category: 'Infrastructure',
+    title: 'Elevated Shed Exterior & Wooden Ramp',
+    caption: 'Illustrative exterior elevation showing the slatted ramp and open-sided corrugated roof.',
+    alt: 'Front exterior of the elevated goat shed with wooden slatted ramp and yellow metal railings',
+    link: '/about/',
+    linkLabel: 'Farm Infrastructure',
+  },
+  {
+    src: '/images/farm/msv-shed-interior-wooden-slats.webp',
+    src800: '/images/farm/msv-shed-interior-wooden-slats-800.webp',
+    width: 1200,
+    height: 900,
+    aspect: 'aspect-[4/3]',
+    spanTwo: false,
+    category: 'Facilities',
+    title: 'Central Aisle & Feeding Troughs',
+    caption: 'Illustrative interior view of raised wooden slats, aisle troughs, and shade-netted sides.',
+    alt: 'Central wooden-slatted walkway with galvanized metal feed troughs and pen partitions on both sides',
+    link: '/about/',
+    linkLabel: 'About Our Setup',
+  },
+  {
+    src: '/images/goat-milk/msv-goat-milk-product.webp',
+    src800: '/images/goat-milk/msv-goat-milk-product-800.webp',
+    width: 1200,
+    height: 900,
+    aspect: 'aspect-[4/3]',
+    spanTwo: false,
+    category: 'Goat Milk',
+    title: 'Goat Milk Showcase',
+    caption: 'Illustrative product visual for farm-sourced goat milk available via direct enquiry.',
+    alt: 'Creamy white goat milk in a clear glass carafe and cup on a rustic wooden table in farm daylight',
+    link: '/goat-milk-theni/',
+    linkLabel: 'Goat Milk Enquiries',
+  },
+  {
+    src: '/images/uppukandam/msv-traditional-uppukandam.webp',
+    src800: '/images/uppukandam/msv-traditional-uppukandam-800.webp',
+    width: 1200,
+    height: 900,
+    aspect: 'aspect-[4/3]',
+    spanTwo: true,
+    category: 'Uppukandam',
+    title: 'Traditional Uppukandam (உப்புக்கண்டம்)',
+    caption: 'Illustrative product visual of traditional dried goat meat presented on a banana leaf.',
+    alt: 'Traditional dried goat meat Uppukandam pieces served on a fresh green banana leaf in an earthen platter',
+    link: '/uppukandam-theni/',
+    linkLabel: 'Uppukandam Enquiries',
+  },
+];
+---
+
+<BaseLayout
+  title="Farm & Product Gallery | MSV Goat Farm, Theni"
+  description="Browse the visual showcase of MSV Goat Farm in Theni, Tamil Nadu — elevated sheds, live goats, goat milk, and traditional Uppukandam (உப்புக்கண்டம்)."
+  ogImage="/images/hero/msv-goat-farm-theni-hero.webp"
+  heroPreloadImage="/images/hero/msv-goat-farm-theni-hero.webp"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="Visual Showcase"
+    title="MSV Goat Farm Gallery"
+    description="Explore illustrative visuals of our elevated goat shed setting in Theni alongside our three core offerings: live goats, Uppukandam (உப்புக்கண்டம்), and goat milk."
+  >
+    <div slot="actions" class="pt-2">
+      <WhatsAppButton
+        phoneNumber={settings.contact.whatsappNumber}
+        message="Hello MSV Goat Farm, I saw your gallery and would like to make an enquiry."
+        label="Enquire on WhatsApp"
+        variant="primary"
+        size="lg"
+      />
+    </div>
+  </PageHero>
+
+  <Section surface="main">
+    <div class="mb-8 rounded-2xl bg-[#F4FBE9] px-5 py-4 text-sm text-[#43563A] ring-1 ring-[#63A83E]/20">
+      <strong class="font-semibold">Visual Disclosure:</strong> The images below are AI-generated
+      illustrative photographs modeled on MSV Goat Farm&rsquo;s setting in Theni and are presented
+      as visual references rather than documentary records of specific events.
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {
+        galleryItems.map((item, idx) => (
+          <figure
+            class:list={[
+              'brand-card m-0 flex flex-col overflow-hidden rounded-[1.25rem] bg-white border border-[#43563A]/10 shadow-[0_10px_28px_-10px_rgba(67,86,58,0.11)]',
+              item.spanTwo && 'md:col-span-2',
+            ]}
+          >
+            <div class="overflow-hidden bg-[#F4FBE9]">
+              <img
+                src={item.src}
+                srcset={`${item.src800} 800w, ${item.src} ${item.width}w`}
+                sizes={item.spanTwo ? '(max-width: 768px) 100vw, 90vw' : '(max-width: 768px) 100vw, 48vw'}
+                alt={item.alt}
+                width={item.width}
+                height={item.height}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                fetchpriority={idx === 0 ? 'high' : undefined}
+                decoding="async"
+                class:list={[item.aspect, 'w-full object-cover']}
+              />
+            </div>
+            <figcaption class="flex flex-1 flex-col justify-between gap-3 p-5 sm:p-6">
+              <div>
+                <span class="inline-flex rounded-full bg-[#F4FBE9] px-3 py-0.5 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38]">
+                  {item.category}
+                </span>
+                <h2 class="m-0 mt-2 font-heading text-xl font-bold text-[#43563A]">
+                  {item.title}
+                </h2>
+                <p class="m-0 mt-1.5 text-sm leading-relaxed text-[#58684C]">
+                  {item.caption}
+                </p>
+              </div>
+              <div>
+                <a
+                  href={item.link}
+                  class="inline-flex min-h-[44px] items-center text-sm font-heading font-bold text-[#438C38] no-underline hover:text-[#35732C]"
+                >
+                  {item.linkLabel} &rarr;
+                </a>
+              </div>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </Section>
+
+  <ContactCtaSection
+    whatsappNumber={settings.contact.whatsappNumber}
+    phoneDisplay={settings.contact.phoneDisplay}
+    phoneConfirmed={settings.contact.phoneConfirmed}
+  />
+</BaseLayout>
+

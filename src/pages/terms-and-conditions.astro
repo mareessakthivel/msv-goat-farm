@@ -1,0 +1,78 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/common/PageHero.astro';
+import Section from '../components/common/Section.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Terms & Conditions', href: '/terms-and-conditions/' },
+];
+---
+
+<BaseLayout
+  title="Terms & Conditions | MSV Goat Farm, Theni"
+  description="Terms and conditions for using the MSV Goat Farm informational website and making direct product enquiries in Theni, Tamil Nadu."
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="Legal Information"
+    title="Terms & Conditions"
+    description="General terms governing the use of the MSV Goat Farm informational website and direct product enquiries."
+  />
+
+  <Section surface="main">
+    <div class="mx-auto max-w-3xl space-y-8 rounded-[1.5rem] bg-white p-6 sm:p-10 ring-1 ring-[#43563A]/10 shadow-sm">
+      <section class="space-y-2">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          1. Informational Purpose Only
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          This website presents general information about {settings.businessName} in{' '}
+          {settings.locationFull} and its confirmed offerings: live goats for sale, traditional
+          Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>), and goat milk.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          2. Enquiry-Based Availability &amp; No Online Orders
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          This website does not publish public product pricing, accept online payments, or form
+          binding purchase contracts. Opening a WhatsApp enquiry link does not submit an order or
+          reserve stock; all product availability, pricing, and arrangements must be confirmed
+          directly with {settings.businessName}.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          3. Visual Assets &amp; Brand Ownership
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          The {settings.businessName} emblem logo, site copy, and visual layouts are for legitimate
+          reference to our farm. Showcase photography on this site uses AI-generated illustrative
+          images inspired by the farm and is not presented as documentary evidence of individual
+          transactions or events.
+        </p>
+      </section>
+
+      <section class="space-y-2">
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          4. Updates &amp; Contact
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          We may update website content and these terms as farm details are confirmed or updated.
+          For questions, please visit our{' '}
+          <a href="/contact/" class="font-semibold text-[#438C38] hover:underline">Contact page</a>.
+        </p>
+      </section>
+    </div>
+  </Section>
+</BaseLayout>
+

@@ -1,0 +1,192 @@
+---
+import { getEntry } from 'astro:content';
+import { ArrowRight, CheckCircle2, MapPin, MessageCircle, Warehouse } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/common/PageHero.astro';
+import Section from '../components/common/Section.astro';
+import Button from '../components/common/Button.astro';
+import WhatsAppButton from '../components/common/WhatsAppButton.astro';
+import ContactCtaSection from '../components/home/ContactCtaSection.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about/' },
+];
+
+const farmPillars = [
+  {
+    icon: MapPin,
+    title: 'Based in Theni, Tamil Nadu',
+    text: 'MSV Goat Farm operates in Theni, serving direct buyer enquiries for live goats, Uppukandam (உப்புக்கண்டம்), and goat milk.',
+  },
+  {
+    icon: Warehouse,
+    title: 'Elevated Shed Environment',
+    text: 'Raised slatted-floor pens with open-sided corrugated roofing, shade-netting, and aisle feeding troughs suited to local conditions.',
+  },
+  {
+    icon: MessageCircle,
+    title: 'Direct WhatsApp & Phone Enquiry',
+    text: 'Availability, stock updates, and product discussions are handled directly with the farm rather than through automated online carts.',
+  },
+];
+---
+
+<BaseLayout
+  title="About MSV Goat Farm | Goat Farm in Theni, Tamil Nadu"
+  description="Learn about MSV Goat Farm in Theni, Tamil Nadu — our elevated farm sheds, direct enquiry process, live goats, Uppukandam (உப்புக்கண்டம்), and goat milk."
+  ogImage="/images/farm/msv-elevated-shed-exterior-ramp.webp"
+  heroPreloadImage="/images/farm/msv-elevated-shed-exterior-ramp.webp"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="About MSV Goat Farm"
+    title="A Direct Enquiry Goat Farm in Theni, Tamil Nadu"
+    description="MSV Goat Farm connects buyers directly with our farm in Theni for live goats, traditional dried goat meat — Uppukandam (உப்புக்கண்டம்), and goat milk."
+  >
+    <div slot="actions" class="flex flex-wrap items-center gap-3 pt-2">
+      <WhatsAppButton
+        phoneNumber={settings.contact.whatsappNumber}
+        message="Hello MSV Goat Farm, I would like to learn more about your farm in Theni."
+        label="Enquire on WhatsApp"
+        variant="primary"
+        size="lg"
+      />
+      <Button href="/gallery/" variant="secondary" size="lg">
+        <span>View Farm Gallery</span>
+        <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
+      </Button>
+    </div>
+
+    <figure
+      slot="media"
+      class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_18px_42px_-14px_rgba(67,86,58,0.18)] ring-1 ring-[#43563A]/10"
+    >
+      <img
+        src="/images/farm/msv-elevated-shed-exterior-ramp.webp"
+        srcset="/images/farm/msv-elevated-shed-exterior-ramp-800.webp 800w, /images/farm/msv-elevated-shed-exterior-ramp.webp 1200w"
+        sizes="(max-width: 1024px) 100vw, 42vw"
+        alt="Front exterior view of the elevated goat shed with wooden slatted ramp and metal railings in Theni"
+        width="1200"
+        height="900"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
+      />
+      <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
+        Illustrative exterior visualization modeled on MSV Goat Farm in Theni.
+      </figcaption>
+    </figure>
+  </PageHero>
+
+  <Section surface="main">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        farmPillars.map((pillar) => {
+          const Icon = pillar.icon;
+          return (
+            <article class="brand-card rounded-[1.25rem] bg-white p-6 ring-1 ring-[#43563A]/10 shadow-[0_10px_28px_-10px_rgba(67,86,58,0.10)]">
+              <span class="inline-flex size-11 items-center justify-center rounded-xl bg-[#F4FBE9] text-[#438C38] mb-4">
+                <Icon class="size-5" aria-hidden="true" />
+              </span>
+              <h2 class="m-0 font-heading text-xl font-bold text-[#43563A]">{pillar.title}</h2>
+              <p class="m-0 mt-2 text-sm leading-relaxed text-[#58684C]">{pillar.text}</p>
+            </article>
+          );
+        })
+      }
+    </div>
+  </Section>
+
+  <Section surface="soft-green">
+    <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
+      <div class="min-w-0 lg:col-span-6">
+        <figure class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_14px_38px_-12px_rgba(67,86,58,0.16)] ring-1 ring-[#43563A]/10">
+          <img
+            src="/images/farm/msv-shed-interior-wooden-slats.webp"
+            srcset="/images/farm/msv-shed-interior-wooden-slats-800.webp 800w, /images/farm/msv-shed-interior-wooden-slats.webp 1200w"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            alt="Interior central aisle of the elevated goat shed with wooden slatted floors and feeding troughs"
+            width="1200"
+            height="900"
+            loading="lazy"
+            decoding="async"
+            class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
+          />
+          <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
+            Illustrative interior visualization of the elevated slatted pens and feeding aisle.
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="min-w-0 space-y-5 lg:col-span-6">
+        <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
+          Three Confirmed Farm Offerings
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          Instead of automated online ordering or fixed online price lists, MSV Goat Farm focuses
+          on direct buyer communication across our three confirmed offerings:
+        </p>
+
+        <ul class="m-0 list-none space-y-3 p-0">
+          <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/8">
+            <CheckCircle2 class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <div>
+              <a
+                href="/live-goats-for-sale-theni/"
+                class="font-heading text-base font-bold text-[#43563A] no-underline hover:text-[#438C38]"
+              >
+                Live Goats for Sale in Theni &rarr;
+              </a>
+              <p class="m-0 mt-1 text-sm text-[#58684C]">
+                Check current herd availability and confirmed breed details directly by enquiry.
+              </p>
+            </div>
+          </li>
+
+          <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/8">
+            <CheckCircle2 class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <div>
+              <a
+                href="/uppukandam-theni/"
+                class="font-heading text-base font-bold text-[#43563A] no-underline hover:text-[#438C38]"
+              >
+                Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>) in Theni &rarr;
+              </a>
+              <p class="m-0 mt-1 text-sm text-[#58684C]">
+                Traditional dried goat meat available by direct farm enquiry.
+              </p>
+            </div>
+          </li>
+
+          <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/8">
+            <CheckCircle2 class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <div>
+              <a
+                href="/goat-milk-theni/"
+                class="font-heading text-base font-bold text-[#43563A] no-underline hover:text-[#438C38]"
+              >
+                Goat Milk in Theni &rarr;
+              </a>
+              <p class="m-0 mt-1 text-sm text-[#58684C]">
+                Confirm current goat milk availability and enquiry arrangements directly.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <ContactCtaSection
+    whatsappNumber={settings.contact.whatsappNumber}
+    phoneDisplay={settings.contact.phoneDisplay}
+    phoneConfirmed={settings.contact.phoneConfirmed}
+  />
+</BaseLayout>
+

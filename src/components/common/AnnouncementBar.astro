@@ -1,0 +1,59 @@
+---
+import { MapPin, Phone, MessageCircle } from 'lucide-astro';
+import { buildPhoneHref, buildWhatsAppUrl } from '../../utils/whatsapp';
+
+export interface Props {
+  locationShort: string;
+  phoneDisplay: string;
+  phoneConfirmed: boolean;
+  whatsappNumber: string;
+  whatsappConfirmed: boolean;
+}
+
+const {
+  locationShort,
+  phoneDisplay,
+  phoneConfirmed,
+  whatsappNumber,
+  whatsappConfirmed,
+} = Astro.props;
+
+const phoneHref = phoneConfirmed ? buildPhoneHref(phoneDisplay) : null;
+const waHref = buildWhatsAppUrl({
+  phoneNumber: whatsappNumber,
+  message: 'Hello MSV Goat Farm, I would like to make an enquiry.',
+});
+---
+
+<div class="bg-[#43563A] text-[#FFFDF4] text-xs sm:text-sm py-2 px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto flex max-w-[78rem] flex-wrap items-center justify-between gap-2">
+    <p class="m-0 inline-flex items-center gap-1.5 font-medium text-[#F4FBE9]">
+      <MapPin class="size-3.5 shrink-0 text-[#A8D957]" aria-hidden="true" />
+      <span>MSV Goat Farm &mdash; {locationShort}</span>
+    </p>
+
+    <div class="flex flex-wrap items-center gap-4">
+      {
+        phoneHref && (
+          <a
+            href={phoneHref}
+            class="inline-flex items-center gap-1.5 font-medium text-[#FFFDF4] hover:text-[#F5C94F] transition-colors no-underline"
+          >
+            <Phone class="size-3.5 shrink-0 text-[#F5C94F]" aria-hidden="true" />
+            <span>{phoneDisplay}</span>
+          </a>
+        )
+      }
+
+      <a
+        href={whatsappConfirmed ? waHref : '/contact/'}
+        target={whatsappConfirmed ? '_blank' : undefined}
+        rel={whatsappConfirmed ? 'noopener noreferrer' : undefined}
+        class="inline-flex items-center gap-1.5 font-semibold text-[#F5C94F] hover:text-[#FFF1D5] transition-colors no-underline"
+      >
+        <MessageCircle class="size-3.5 shrink-0" aria-hidden="true" />
+        <span>WhatsApp Enquiry</span>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+{
+  "businessName": "MSV Goat Farm",
+  "locationShort": "Theni, Tamil Nadu",
+  "locationFull": "Theni, Tamil Nadu, India",
+  "contact": {
+    "phoneDisplay": "+91 95246 95724",
+    "phoneConfirmed": true,
+    "whatsappNumber": "919524695724",
+    "whatsappConfirmed": true,
+    "email": "__PENDING_OWNER_EMAIL__",
+    "emailConfirmed": false,
+    "addressNote": "__PENDING_OWNER_STREET_ADDRESS__",
+    "addressConfirmed": false,
+    "googleMapsUrl": "__PENDING_OWNER_GOOGLE_MAPS_URL__",
+    "googleMapsConfirmed": false,
+    "hoursNote": "__PENDING_OWNER_HOURS__",
+    "hoursConfirmed": false
+  },
+  "navLinks": [
+    { "label": "Home", "href": "/" },
+    { "label": "About", "href": "/about/" },
+    { "label": "Live Goats", "href": "/live-goats-for-sale-theni/" },
+    { "label": "Uppukandam", "href": "/uppukandam-theni/" },
+    { "label": "Goat Milk", "href": "/goat-milk-theni/" },
+    { "label": "Gallery", "href": "/gallery/" },
+    { "label": "Contact", "href": "/contact/" }
+  ],
+  "footerProductLinks": [
+    { "label": "Live Goats for Sale", "href": "/live-goats-for-sale-theni/" },
+    { "label": "Uppukandam (உப்புக்கண்டம்)", "href": "/uppukandam-theni/" },
+    { "label": "Goat Milk", "href": "/goat-milk-theni/" },
+    { "label": "Farm Gallery", "href": "/gallery/" },
+    { "label": "About the Farm", "href": "/about/" }
+  ],
+  "footerLegalLinks": [
+    { "label": "Privacy Policy", "href": "/privacy-policy/" },
+    { "label": "Terms & Conditions", "href": "/terms-and-conditions/" }
+  ],
+  "faqs": [
+    {
+      "question": "How do I check availability or enquire about products from MSV Goat Farm?",
+      "answer": "You can contact MSV Goat Farm directly via WhatsApp or telephone. Product pricing and current stock availability are shared directly during your enquiry rather than listed online."
+    },
+    {
+      "question": "What products are currently available at MSV Goat Farm?",
+      "answer": "Our confirmed farm offerings are live goats for sale, traditional dried goat meat — Uppukandam (உப்புக்கண்டம்), and goat milk, based in Theni, Tamil Nadu."
+    },
+    {
+      "question": "Do you offer online checkout or home delivery?",
+      "answer": "There is no online shopping cart or online payment on this website. Please reach out on WhatsApp or telephone to discuss current availability and enquiry details directly with the farm."
+    },
+    {
+      "question": "Can I visit the goat farm in Theni before purchasing?",
+      "answer": "Farm visit details and timings can be confirmed directly with the farm owner via WhatsApp or phone prior to your visit."
+    }
+  ]
+}

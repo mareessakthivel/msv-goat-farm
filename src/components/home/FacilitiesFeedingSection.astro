@@ -1,0 +1,87 @@
+---
+import { LayoutGrid, SunMedium, Utensils } from 'lucide-astro';
+import Section from '../common/Section.astro';
+
+const facilityPoints = [
+  {
+    icon: LayoutGrid,
+    title: 'Elevated Slatted Pens',
+    description:
+      'Raised wooden and perforated slatted flooring paired with tubular metal pen partitions along central walkways.',
+  },
+  {
+    icon: SunMedium,
+    title: 'Open-Sided Ventilation & Shade',
+    description:
+      'Corrugated truss roofing with side shade-netting allows natural daylight and cross-breeze across the shed.',
+  },
+  {
+    icon: Utensils,
+    title: 'Structured Trough & Rail Feeding',
+    description:
+      'Galvanized half-round feeding troughs along the aisle and elevated rail-mounted green fodder feeding arrangements.',
+  },
+];
+---
+
+<Section id="facilities" surface="gradient-section" class="reveal-on-scroll">
+  <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
+    <div class="min-w-0 lg:col-span-6 order-2 lg:order-1">
+      <figure class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_14px_38px_-12px_rgba(67,86,58,0.18)] ring-1 ring-[#43563A]/10">
+        <img
+          src="/images/farm/msv-shed-interior-wooden-slats.webp"
+          srcset="/images/farm/msv-shed-interior-wooden-slats-800.webp 800w, /images/farm/msv-shed-interior-wooden-slats.webp 1200w"
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          alt="Central walkway inside the elevated goat shed with wooden slatted floor, galvanized feed troughs with chopped green fodder, and tubular metal railings"
+          width="1200"
+          height="900"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
+        />
+        <figcaption class="px-3 pt-2.5 pb-1 text-xs text-[#58684C]">
+          Illustrative interior view inspired by the central feeding aisle and raised wooden slats at MSV Goat Farm.
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="min-w-0 space-y-6 lg:col-span-6 order-1 lg:order-2">
+      <div class="space-y-3">
+        <span class="inline-flex items-center rounded-full bg-white/90 px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+          Farm Facilities &amp; Feeding Setup
+        </span>
+        <h2 class="m-0 font-heading text-3xl sm:text-4xl font-extrabold text-[#43563A]">
+          Elevated Housing &amp; Organized Feeding Space
+        </h2>
+        <p class="m-0 text-base leading-relaxed text-[#58684C]">
+          The farm layout combines raised slatted-floor sheds with dedicated aisle troughs and open
+          natural ventilation suited to Theni&rsquo;s rural environment.
+        </p>
+      </div>
+
+      <div class="space-y-3.5">
+        {
+          facilityPoints.map((point) => {
+            const Icon = point.icon;
+            return (
+              <div class="flex items-start gap-3.5 rounded-2xl bg-white/92 p-4 shadow-[0_6px_18px_-8px_rgba(67,86,58,0.12)] ring-1 ring-[#43563A]/8">
+                <span class="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#F4FBE9] text-[#438C38]">
+                  <Icon class="size-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 class="m-0 font-heading text-base font-bold text-[#43563A]">
+                    {point.title}
+                  </h3>
+                  <p class="m-0 mt-1 text-sm leading-relaxed text-[#58684C]">
+                    {point.description}
+                  </p>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+</Section>
+

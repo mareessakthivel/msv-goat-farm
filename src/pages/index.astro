@@ -1,0 +1,55 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/home/HeroSection.astro';
+import ProductsSection from '../components/home/ProductsSection.astro';
+import AboutWhySection from '../components/home/AboutWhySection.astro';
+import LiveGoatsBreedsSection from '../components/home/LiveGoatsBreedsSection.astro';
+import FacilitiesFeedingSection from '../components/home/FacilitiesFeedingSection.astro';
+import ProductSpotlightsSection from '../components/home/ProductSpotlightsSection.astro';
+import FaqSection from '../components/home/FaqSection.astro';
+import ContactCtaSection from '../components/home/ContactCtaSection.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+
+const productEntries = await getCollection('products');
+const products = productEntries
+  .map((entry) => entry.data)
+  .sort((a, b) => a.order - b.order);
+---
+
+<BaseLayout
+  title="MSV Goat Farm | Live Goats, Uppukandam & Goat Milk in Theni"
+  description="MSV Goat Farm in Theni, Tamil Nadu. Enquire directly on WhatsApp or telephone for live goats for sale, traditional Uppukandam (உப்புக்கண்டம்), and goat milk."
+  heroPreloadImage="/images/hero/msv-goat-farm-theni-hero.webp"
+  faqs={settings.faqs}
+  includeWebsiteSchema={true}
+>
+  <HeroSection
+    whatsappNumber={settings.contact.whatsappNumber}
+    phoneDisplay={settings.contact.phoneDisplay}
+    phoneConfirmed={settings.contact.phoneConfirmed}
+  />
+
+  <ProductsSection
+    products={products}
+    whatsappNumber={settings.contact.whatsappNumber}
+  />
+
+  <AboutWhySection whatsappNumber={settings.contact.whatsappNumber} />
+
+  <LiveGoatsBreedsSection whatsappNumber={settings.contact.whatsappNumber} />
+
+  <FacilitiesFeedingSection />
+
+  <ProductSpotlightsSection whatsappNumber={settings.contact.whatsappNumber} />
+
+  <FaqSection faqs={settings.faqs} />
+
+  <ContactCtaSection
+    whatsappNumber={settings.contact.whatsappNumber}
+    phoneDisplay={settings.contact.phoneDisplay}
+    phoneConfirmed={settings.contact.phoneConfirmed}
+  />
+</BaseLayout>

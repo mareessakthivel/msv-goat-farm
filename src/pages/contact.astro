@@ -1,0 +1,198 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-astro';
+import { buildPhoneHref } from '../utils/whatsapp';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/common/PageHero.astro';
+import Section from '../components/common/Section.astro';
+import WhatsAppButton from '../components/common/WhatsAppButton.astro';
+import Button from '../components/common/Button.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+
+const productEntries = await getCollection('products');
+const products = productEntries
+  .map((entry) => entry.data)
+  .sort((a, b) => a.order - b.order);
+
+const phoneHref = settings.contact.phoneConfirmed
+  ? buildPhoneHref(settings.contact.phoneDisplay)
+  : null;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Contact', href: '/contact/' },
+];
+---
+
+<BaseLayout
+  title="Contact MSV Goat Farm | WhatsApp & Farm Enquiries in Theni"
+  description="Contact MSV Goat Farm in Theni, Tamil Nadu via WhatsApp for live goats for sale, traditional Uppukandam (உப்புக்கண்டம்), and goat milk enquiries."
+  ogImage="/images/farm/msv-elevated-shed-exterior-ramp.webp"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="Direct Farm Enquiries"
+    title="Contact MSV Goat Farm in Theni"
+    description="Choose a product below to open WhatsApp with a prefilled enquiry message, or connect with us directly once our published phone details are active."
+  >
+    <div slot="actions" class="flex flex-wrap items-center gap-3 pt-2">
+      <WhatsAppButton
+        phoneNumber={settings.contact.whatsappNumber}
+        message="Hello MSV Goat Farm, I would like to make an enquiry regarding your farm in Theni."
+        label="Open General WhatsApp Enquiry"
+        variant="primary"
+        size="lg"
+      />
+      {
+        phoneHref && (
+          <Button href={phoneHref} variant="gold" size="lg">
+            <Phone class="size-4 shrink-0" aria-hidden="true" />
+            <span>Call {settings.contact.phoneDisplay}</span>
+          </Button>
+        )
+      }
+    </div>
+
+    <div
+      slot="media"
+      class="rounded-[1.5rem] bg-white p-6 shadow-[0_14px_36px_-12px_rgba(67,86,58,0.14)] ring-1 ring-[#43563A]/10 space-y-4"
+    >
+      <h2 class="m-0 font-heading text-xl font-bold text-[#43563A]">Farm Location &amp; Contact</h2>
+      <ul class="m-0 list-none space-y-3 p-0 text-sm text-[#58684C]">
+        <li class="flex items-start gap-3">
+          <MapPin class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+          <span>
+            <strong class="text-[#43563A]">Location:</strong>{' '}
+            {settings.contact.addressConfirmed ? settings.contact.addressNote : settings.locationFull}
+            {
+              settings.contact.googleMapsConfirmed && settings.contact.googleMapsUrl && (
+                <a
+                  href={settings.contact.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="ml-1.5 font-semibold text-[#438C38] hover:underline"
+                >
+                  Open in Google Maps &rarr;
+                </a>
+              )
+            }
+          </span>
+        </li>
+
+        {
+          phoneHref && (
+            <li class="flex items-start gap-3">
+              <Phone class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+              <span>
+                <strong class="text-[#43563A]">Telephone:</strong>{' '}
+                <a href={phoneHref} class="font-semibold text-[#438C38] hover:underline">
+                  {settings.contact.phoneDisplay}
+                </a>
+              </span>
+            </li>
+          )
+        }
+
+        {
+          settings.contact.emailConfirmed && (
+            <li class="flex items-start gap-3">
+              <Mail class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+              <span>
+                <strong class="text-[#43563A]">Email:</strong>{' '}
+                <a
+                  href={`mailto:${settings.contact.email}`}
+                  class="font-semibold text-[#438C38] hover:underline"
+                >
+                  {settings.contact.email}
+                </a>
+              </span>
+            </li>
+          )
+        }
+
+        {
+          settings.contact.hoursConfirmed && (
+            <li class="flex items-start gap-3">
+              <Clock class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+              <span>
+                <strong class="text-[#43563A]">Enquiry Hours:</strong> {settings.contact.hoursNote}
+              </span>
+            </li>
+          )
+        }
+
+        {
+          settings.contact.whatsappConfirmed && (
+            <li class="flex items-start gap-3">
+              <MessageCircle class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+              <span>
+                <strong class="text-[#43563A]">WhatsApp:</strong>{' '}
+                +{settings.contact.whatsappNumber.replace(/^(\d{2})(\d{5})(\d{5})$/, '$1 $2 $3')}
+              </span>
+            </li>
+          )
+        }
+
+        <li class="flex items-start gap-3">
+          <MessageCircle class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+          <span>
+            <strong class="text-[#43563A]">Enquiry Mode:</strong> Direct WhatsApp and telephone
+            enquiries only — no online checkout or online payments.
+          </span>
+        </li>
+      </ul>
+    </div>
+  </PageHero>
+
+  <Section surface="main">
+    <div class="mx-auto mb-8 max-w-2xl text-center space-y-2">
+      <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
+        Product-Specific WhatsApp Enquiries
+      </h2>
+      <p class="m-0 text-sm sm:text-base text-[#58684C]">
+        Clicking any button below opens WhatsApp with a prefilled message so you can review and
+        send your enquiry directly.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        products.map((product) => (
+          <article class="brand-card flex flex-col justify-between rounded-[1.25rem] bg-[#FFFDF4] p-6 ring-1 ring-[#43563A]/10 shadow-[0_8px_24px_-10px_rgba(67,86,58,0.10)]">
+            <div class="space-y-2">
+              <h3 class="m-0 font-heading text-xl font-bold text-[#43563A]">
+                {product.name}
+                {product.tamilName && (
+                  <span lang="ta" class="ml-1.5 text-sm font-semibold text-[#438C38]">
+                    ({product.tamilName})
+                  </span>
+                )}
+              </h3>
+              <p class="m-0 text-sm leading-relaxed text-[#58684C]">{product.shortDescription}</p>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-[#43563A]/8 flex flex-col gap-2">
+              <WhatsAppButton
+                phoneNumber={settings.contact.whatsappNumber}
+                message={product.whatsappMessage}
+                label={product.enquiryLabel}
+                variant="primary"
+                size="sm"
+              />
+              <a
+                href={product.href}
+                class="inline-flex min-h-[44px] items-center justify-center text-sm font-heading font-bold text-[#438C38] no-underline hover:text-[#35732C]"
+              >
+                View {product.name} Page &rarr;
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+</BaseLayout>
+

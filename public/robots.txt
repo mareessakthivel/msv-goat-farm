@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://msvgoatfarm.pages.dev/sitemap-index.xml
+

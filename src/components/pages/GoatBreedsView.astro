@@ -1,0 +1,53 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../common/PageHero.astro';
+import Section from '../common/Section.astro';
+import WhatsAppButton from '../common/WhatsAppButton.astro';
+
+export interface Props {
+  breeds: CollectionEntry<'breeds'>[];
+  whatsappNumber: string;
+}
+
+const { breeds, whatsappNumber } = Astro.props;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Goat Breeds', href: '/goat-breeds/' },
+];
+---
+
+<BaseLayout
+  title="Goat Breeds | MSV Goat Farm, Theni"
+  description="Confirmed goat breeds raised at MSV Goat Farm in Theni, Tamil Nadu."
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="Confirmed Herd Breeds"
+    title="Goat Breeds at MSV Goat Farm"
+    description="Owner-confirmed goat breeds at MSV Goat Farm in Theni, Tamil Nadu."
+  />
+
+  <Section surface="main">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        breeds.map((breed) => (
+          <article class="brand-card rounded-[1.25rem] bg-white p-6 ring-1 ring-[#43563A]/10 shadow-sm space-y-4">
+            <h2 class="m-0 font-heading text-xl font-bold text-[#43563A]">{breed.data.name}</h2>
+            <p class="m-0 text-sm leading-relaxed text-[#58684C]">{breed.data.summary}</p>
+            <WhatsAppButton
+              phoneNumber={whatsappNumber}
+              message={`Hello MSV Goat Farm, I would like to enquire about ${breed.data.name} goats in Theni.`}
+              label={`Enquire about ${breed.data.name}`}
+              variant="primary"
+              size="sm"
+            />
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+</BaseLayout>
+

@@ -1,0 +1,33 @@
+---
+import { CheckCircle2 } from 'lucide-astro';
+
+export interface ChecklistItem {
+  title: string;
+  description: string;
+}
+
+export interface Props {
+  items: ChecklistItem[];
+  columns?: 2 | 3;
+}
+
+const { items, columns = 3 } = Astro.props;
+const gridClass = columns === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+---
+
+<div class:list={['grid gap-5', gridClass]}>
+  {
+    items.map((item) => (
+      <article class="brand-card rounded-[1.25rem] bg-white p-5 sm:p-6 ring-1 ring-[#43563A]/10 shadow-[0_8px_24px_-12px_rgba(67,86,58,0.10)] space-y-2">
+        <div class="flex items-start gap-2.5">
+          <CheckCircle2 class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
+          <h3 class="m-0 font-heading text-base sm:text-lg font-bold text-[#43563A]">
+            {item.title}
+          </h3>
+        </div>
+        <p class="m-0 text-sm leading-relaxed text-[#58684C]">{item.description}</p>
+      </article>
+    ))
+  }
+</div>
+

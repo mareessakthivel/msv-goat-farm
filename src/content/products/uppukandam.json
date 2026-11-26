@@ -1,16 +1,25 @@
 {
   "id": "uppukandam",
   "order": 2,
-  "name": "Uppukandam",
+  "name": "Traditional Uppukandam",
   "tamilName": "உப்புக்கண்டம்",
+  "categoryLabel": "Traditional Dried Meat",
+  "locationLabel": "Theni, Tamil Nadu",
   "slug": "uppukandam-theni",
   "href": "/uppukandam-theni/",
-  "shortDescription": "Traditional dried goat meat (உப்புக்கண்டம்) from MSV Goat Farm in Theni. Contact us directly on WhatsApp to enquire about current batch availability.",
-  "enquiryLabel": "Enquire for Uppukandam",
+  "shortDescription": "Traditional Tamil cured and dried goat meat — distinctly concentrated in flavour for pan-frying or slow-simmered gravies, rather than fresh raw meat.",
+  "summaryIntro": "Uppukandam (உப்புக்கண்டம்) is an age-old Tamil preserved goat meat preparation made by curing and drying meat pieces. Unlike fresh meat, it requires light pounding and quick cooking before serving.",
+  "highlights": [
+    "Dried goat meat speciality rooted in Tamil culinary tradition",
+    "Prepared in small farm batches rather than mass retail packs",
+    "Pack sizes, spice profile, and batch dates confirmed by the farm"
+  ],
+  "exploreLabel": "Explore Uppukandam",
+  "enquiryLabel": "Enquire on WhatsApp",
   "whatsappMessage": "Hello MSV Goat Farm, I would like to enquire about Uppukandam (உப்புக்கண்டம்) availability and enquiry details.",
   "image": {
     "src": "/images/uppukandam/msv-traditional-uppukandam.webp",
-    "alt": "Traditional dried goat meat Uppukandam pieces served on a fresh green banana leaf in an earthen platter under warm natural daylight",
+    "alt": "Traditional dried goat meat Uppukandam pieces served on a green banana leaf in an earthen platter under warm daylight",
     "isGenerated": true
   }
 }

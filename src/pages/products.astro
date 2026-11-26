@@ -1,0 +1,178 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { ArrowRight, CheckCircle2, Phone } from 'lucide-astro';
+import { buildPhoneHref } from '../utils/whatsapp';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/common/PageHero.astro';
+import Section from '../components/common/Section.astro';
+import ProductCard from '../components/products/ProductCard.astro';
+import Button from '../components/common/Button.astro';
+import WhatsAppButton from '../components/common/WhatsAppButton.astro';
+import ContactCtaSection from '../components/home/ContactCtaSection.astro';
+
+const siteSettings = await getEntry('settings', 'site');
+const settings = siteSettings!.data;
+
+const productEntries = await getCollection('products');
+const products = productEntries
+  .map((entry) => entry.data)
+  .sort((a, b) => a.order - b.order);
+
+const phoneHref = settings.contact.phoneConfirmed
+  ? buildPhoneHref(settings.contact.phoneDisplay)
+  : null;
+
+const breadcrumbs = [
+  { label: 'Home', href: '/' },
+  { label: 'Our Products', href: '/products/' },
+];
+
+const sourcingFacts = [
+  {
+    title: 'Farm-Rooted Product Categories',
+    detail:
+      'Every product on this page represents one of MSV Goat Farm’s three confirmed farm offerings in Theni: live goats, traditional Uppukandam (உப்புக்கண்டம்), and farm-sourced goat milk.',
+  },
+  {
+    title: 'Clear Separation of Product Context & Stock Details',
+    detail:
+      'Product pages explain each item’s agricultural and culinary background openly, while current herd breeds, batch readiness, unit weights, and pricing are confirmed directly with the farm.',
+  },
+  {
+    title: 'Direct Farm Communication',
+    detail:
+      'Speak with the farm team via WhatsApp or telephone to discuss animal characteristics, milk availability schedules, or Uppukandam pack details before planning a pickup or visit.',
+  },
+];
+---
+
+<BaseLayout
+  title="Our Products | MSV Goat Farm, Theni"
+  description="Explore Live Goats for Sale, Traditional Uppukandam (உப்புக்கண்டம்), and Farm-Sourced Goat Milk at MSV Goat Farm in Theni, Tamil Nadu."
+  ogImage="/images/hero/msv-goat-farm-theni-hero.webp"
+  heroPreloadImage="/images/hero/msv-goat-farm-theni-hero.webp"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHero
+    breadcrumbs={breadcrumbs}
+    eyebrow="Farm Catalogue • Theni, Tamil Nadu"
+    title="Explore Our Products at MSV Goat Farm"
+    description="MSV Goat Farm focuses on three distinct livestock and traditional farm products in Theni — farm-reared live goats, traditional cured Uppukandam (உப்புக்கண்டம்), and farm-sourced goat milk."
+  >
+    <div slot="actions" class="flex flex-wrap items-center gap-3 pt-2">
+      <WhatsAppButton
+        phoneNumber={settings.contact.whatsappNumber}
+        message="Hello MSV Goat Farm, I would like to ask about your products in Theni."
+        label="Enquire on WhatsApp"
+        variant="primary"
+        size="lg"
+      />
+      {
+        phoneHref && (
+          <Button href={phoneHref} variant="gold" size="lg">
+            <Phone class="size-4 shrink-0" aria-hidden="true" />
+            <span>Call {settings.contact.phoneDisplay}</span>
+          </Button>
+        )
+      }
+      <Button href="/about/" variant="secondary" size="lg">
+        <span>About Our Farm</span>
+        <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
+      </Button>
+    </div>
+
+    <figure
+      slot="media"
+      class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_18px_42px_-14px_rgba(67,86,58,0.18)] ring-1 ring-[#43563A]/10"
+    >
+      <img
+        src="/images/hero/msv-goat-farm-theni-hero.webp"
+        srcset="/images/hero/msv-goat-farm-theni-hero-800.webp 800w, /images/hero/msv-goat-farm-theni-hero.webp 1600w"
+        sizes="(max-width: 1024px) 100vw, 42vw"
+        alt="Elevated wooden-slatted goat shed with tubular metal railings, goats, green fodder plots, and Theni hills"
+        width="1600"
+        height="900"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+        class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
+      />
+      <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
+        Illustrative overview of MSV Goat Farm&rsquo;s elevated goat housing in Theni, Tamil Nadu.
+      </figcaption>
+    </figure>
+  </PageHero>
+
+  <Section id="catalogue" surface="main">
+    <div class="mx-auto mb-10 max-w-3xl text-center space-y-3">
+      <span class="inline-flex items-center rounded-full bg-[#F4FBE9] px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+        Three Confirmed Product Categories
+      </span>
+      <h2 class="m-0 font-heading text-3xl sm:text-4xl font-extrabold text-[#43563A]">
+        Live Goats, Traditional Uppukandam &amp; Goat Milk
+      </h2>
+      <p class="m-0 text-base text-[#58684C]">
+        Select any product below to review its characteristics, farming context, buyer checklist,
+        or message the farm directly.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+      {
+        products.map((product, index) => (
+          <ProductCard
+            name={product.name}
+            tamilName={product.tamilName}
+            categoryLabel={product.categoryLabel}
+            locationLabel={product.locationLabel}
+            description={product.shortDescription}
+            summaryIntro={product.summaryIntro}
+            highlights={product.highlights}
+            href={product.href}
+            exploreLabel={product.exploreLabel}
+            enquiryLabel={product.enquiryLabel}
+            whatsappNumber={settings.contact.whatsappNumber}
+            whatsappMessage={product.whatsappMessage}
+            imageSrc={product.image.src}
+            imageAlt={product.image.alt}
+            placeholderLabel={product.image.placeholderLabel}
+            wideOnTablet={products.length % 2 === 1 && index === products.length - 1}
+            showExtended={true}
+          />
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section surface="soft-green">
+    <div class="mx-auto mb-8 max-w-2xl text-center space-y-2">
+      <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
+        How Our Product Catalogue Works
+      </h2>
+      <p class="m-0 text-base text-[#58684C]">
+        Transparent farm information first, followed by direct confirmation of live stock and batches.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        sourcingFacts.map((item) => (
+          <article class="brand-card rounded-[1.25rem] bg-white p-6 ring-1 ring-[#43563A]/10 shadow-sm space-y-2.5">
+            <div class="flex items-start gap-2.5">
+              <CheckCircle2 class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
+              <h3 class="m-0 font-heading text-lg font-bold text-[#43563A]">{item.title}</h3>
+            </div>
+            <p class="m-0 text-sm leading-relaxed text-[#58684C]">{item.detail}</p>
+          </article>
+        ))
+      }
+    </div>
+  </Section>
+
+  <ContactCtaSection
+    whatsappNumber={settings.contact.whatsappNumber}
+    phoneDisplay={settings.contact.phoneDisplay}
+    phoneConfirmed={settings.contact.phoneConfirmed}
+  />
+</BaseLayout>
+

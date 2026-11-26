@@ -115,7 +115,13 @@ const galleryItems = [
     title="MSV Goat Farm Gallery"
     description="Explore illustrative visuals of our elevated goat shed setting in Theni alongside our three core offerings: live goats, Uppukandam (உப்புக்கண்டம்), and goat milk."
   >
-    <div slot="actions" class="pt-2">
+    <div slot="actions" class="flex flex-wrap items-center gap-3 pt-2">
+      <a
+        href="/products/"
+        class="brand-btn inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-[#438C38]/30 bg-white px-6 py-3 font-heading text-base font-bold text-[#43563A] no-underline transition-colors hover:bg-[#F4FBE9]"
+      >
+        <span>Explore All Products</span>
+      </a>
       <WhatsAppButton
         phoneNumber={settings.contact.whatsappNumber}
         message="Hello MSV Goat Farm, I saw your gallery and would like to make an enquiry."

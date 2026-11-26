@@ -1,153 +1,308 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
-import { CheckCircle2, MessageCircle } from 'lucide-astro';
+import { Droplets, Info, Sparkles } from 'lucide-astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/common/PageHero.astro';
+import ProductPdpHero from '../components/products/ProductPdpHero.astro';
+import ProductSpecsTable from '../components/products/ProductSpecsTable.astro';
+import RelatedProductsSection from '../components/products/RelatedProductsSection.astro';
 import Section from '../components/common/Section.astro';
-import WhatsAppButton from '../components/common/WhatsAppButton.astro';
-import Button from '../components/common/Button.astro';
+import InfoChecklist from '../components/products/InfoChecklist.astro';
 import FaqAccordion from '../components/products/FaqAccordion.astro';
 import ContactCtaSection from '../components/home/ContactCtaSection.astro';
 
 const siteSettings = await getEntry('settings', 'site');
 const settings = siteSettings!.data;
-const product = (await getCollection('products')).find((p) => p.data.id === 'goat-milk')!.data;
+const allProducts = (await getCollection('products'))
+  .map((entry) => entry.data)
+  .sort((a, b) => a.order - b.order);
+const product = allProducts.find((p) => p.id === 'goat-milk')!;
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
+  { label: 'Our Products', href: '/products/' },
   { label: 'Goat Milk', href: '/goat-milk-theni/' },
+];
+
+const gallery = [
+  {
+    src: '/images/goat-milk/msv-goat-milk-product.webp',
+    src800: '/images/goat-milk/msv-goat-milk-product-800.webp',
+    alt: product.image.alt,
+    caption: 'Illustrative product photograph representing farm-sourced goat milk.',
+    label: 'Farm-Sourced Goat Milk',
+  },
+  {
+    src: '/images/live-goats/live-goats-elevated-shed.webp',
+    src800: '/images/live-goats/live-goats-elevated-shed-800.webp',
+    alt: 'Goats housed in raised slatted pens at MSV Goat Farm in Theni',
+    caption: 'Illustrative farm livestock view modeled on MSV Goat Farm in Theni.',
+    label: 'Elevated Pen Housing',
+  },
+  {
+    src: '/images/farm/msv-shed-interior-wooden-slats.webp',
+    src800: '/images/farm/msv-shed-interior-wooden-slats-800.webp',
+    alt: 'Central feeding aisle with galvanized feed troughs and green fodder',
+    caption: 'Illustrative view of raised slatted flooring and aisle feeding troughs.',
+    label: 'Aisle Feeding Setup',
+  },
+];
+
+const keyFacts = [
+  { label: 'Product Type', value: 'Farm-Sourced Goat Milk' },
+  { label: 'Farm Location', value: 'Theni, Tamil Nadu' },
+  { label: 'Supply Basis', value: 'Lactation Dependent' },
+  { label: 'Volume & Price', value: 'Confirmed on Enquiry' },
+];
+
+const specRows = [
+  {
+    label: 'Product Name',
+    value: 'Farm-Sourced Goat Milk (Caprine Dairy)',
+  },
+  {
+    label: 'Dairy Colour & Texture',
+    value: 'Natural Crisp White Colour • Even Natural Emulsion',
+    note: 'Goats convert plant beta-carotene into colourless vitamin A and lack agglutinin.',
+  },
+  {
+    label: 'Fat Globule Profile',
+    value: 'Smaller Natural Fat Globules',
+    note: 'Tends to stay dispersed longer without rapid cream separation.',
+  },
+  {
+    label: 'Curd & Kitchen Behaviour',
+    value: 'Soft Curd Formation',
+    note: 'Used in everyday cooking, boiling for household use, or soft dairy preparations.',
+  },
+  {
+    label: 'Sourcing & Herd Context',
+    value: 'MSV Goat Farm, Theni, Tamil Nadu',
+    note: 'Supply varies naturally based on active milking stock and lactation stage.',
+  },
+  {
+    label: 'Handling & Container State',
+    value: 'Confirmed Directly Prior to Pickup',
+    note: 'Unpasteurised vs. heated/chilled state, vessel options, and storage are confirmed by the farm.',
+  },
+  {
+    label: 'Volume, Price & Collection',
+    value: 'Confirmed Directly With Farm',
+    note: 'Speak with +91 95246 95724 to check daily availability and pickup timing.',
+  },
+];
+
+const jumpLinks = [
+  { label: 'Specifications', href: '#specifications' },
+  { label: 'Dairy Characteristics', href: '#milk-characteristics' },
+  { label: 'Farm Sourcing', href: '#sourcing-supply' },
+  { label: 'Questions to Confirm', href: '#buyer-checklist' },
+  { label: 'FAQs', href: '#faqs' },
+];
+
+const milkCharacteristics = [
+  {
+    icon: Sparkles,
+    title: 'Natural Stark-White Colour',
+    detail:
+      'Goats convert dietary beta-carotene pigments into colourless vitamin A before milk synthesis, giving goat milk its distinctive crisp white colour compared to cow milk.',
+  },
+  {
+    icon: Droplets,
+    title: 'Smaller Fat Globules & Even Dispersion',
+    detail:
+      'Goat milk naturally contains smaller milk-fat globules and lacks the protein agglutinin, so the cream remains dispersed much longer rather than rising rapidly to the top.',
+  },
+  {
+    icon: Info,
+    title: 'Soft Curd Culinary Behaviour',
+    detail:
+      'In general kitchen and dairy use, caprine milk forms a softer, gentler curd structure, shaping how it behaves in homemade yogurt and small-batch dairy preparations.',
+  },
+];
+
+const confirmationChecklist = [
+  {
+    title: 'Current Daily or Batch Availability',
+    description:
+      'Ask whether milking does are presently supplying milk on the day or week you intend to visit MSV Goat Farm.',
+  },
+  {
+    title: 'Milking & Collection Timing',
+    description:
+      'Confirm morning or evening collection times in Theni so pickup aligns with your travel.',
+  },
+  {
+    title: 'Handling State (Unheated vs. Boiled / Chilled)',
+    description:
+      'Ask how the milk is handled and stored after milking — MSV Goat Farm does not claim pasteurisation or certification unless confirmed by the owner.',
+  },
+  {
+    title: 'Container & Quantity Options',
+    description:
+      'Confirm available unit quantities, container type, and whether buyers should bring a clean vessel for pickup.',
+  },
+  {
+    title: 'Current Milk Price',
+    description:
+      'Unit rate per volume is shared directly by the farm owner during your WhatsApp or telephone conversation.',
+  },
+  {
+    title: 'Pickup vs. Local Supply Arrangements',
+    description:
+      'Confirm whether goat milk is collected at the farm in Theni or whether local delivery is available for your area.',
+  },
 ];
 
 const faqs = [
   {
-    question: 'How do I check goat milk availability at MSV Goat Farm in Theni?',
+    question: 'Why does goat milk look whiter and separate cream slower than cow milk?',
     answer:
-      'Use the WhatsApp enquiry button on this page to open a prefilled message and confirm current goat milk availability directly with the farm.',
+      'In caprine dairy science, goats convert plant beta-carotene into colourless vitamin A, giving the milk a bright white tone. Its fat globules are also smaller and lack the agglutinin protein, allowing the fat emulsion to stay more evenly suspended naturally.',
   },
   {
-    question: 'Are quantities, prices, or delivery details listed online?',
+    question: 'Is MSV Goat Farm’s goat milk pasteurised, certified, or delivered daily?',
     answer:
-      'No. MSV Goat Farm shares current availability and enquiry details directly during your WhatsApp or telephone conversation.',
+      'None of those attributes are claimed on this website without direct owner confirmation. Buyers looking for goat milk in Theni should ask MSV Goat Farm directly about handling state, collection schedule, and pickup or supply options.',
   },
   {
-    question: 'Can I book or pay for goat milk online?',
+    question: 'Why does goat milk supply vary at a goat farm?',
     answer:
-      'No. There is no online cart, registration, or online payment on this website.',
+      'Goat milk yield changes naturally depending on how many does are currently lactating, seasonal kidding cycles, and herd feeding management.',
+  },
+  {
+    question: 'What should I ask before visiting MSV Goat Farm in Theni for goat milk?',
+    answer:
+      'Call or message +91 95246 95724 ahead of time to confirm available volume for that day, unit pricing, container arrangements, and convenient pickup hours.',
   },
 ];
 ---
 
 <BaseLayout
-  title="Goat Milk in Theni | MSV Goat Farm, Tamil Nadu"
-  description="Enquire about farm-sourced goat milk in Theni, Tamil Nadu at MSV Goat Farm. Direct WhatsApp and telephone enquiries."
+  title="Goat Milk in Theni | Farm-Sourced Dairy Details | MSV Goat Farm"
+  description="Farm-sourced goat milk in Theni, Tamil Nadu from MSV Goat Farm. Review dairy specifications, physical characteristics, sourcing context, buyer checklist, and FAQs."
   ogImage="/images/goat-milk/msv-goat-milk-product.webp"
   heroPreloadImage="/images/goat-milk/msv-goat-milk-product.webp"
   breadcrumbs={breadcrumbs}
   faqs={faqs}
 >
-  <PageHero
+  <ProductPdpHero
     breadcrumbs={breadcrumbs}
-    eyebrow="Farm Dairy • Theni, Tamil Nadu"
+    eyebrow="Farm Dairy • Goat Milk in Theni"
     title="Goat Milk in Theni"
-    description="Farm-sourced goat milk available through direct enquiry at MSV Goat Farm in Theni, Tamil Nadu. Contact us on WhatsApp or by telephone to confirm availability."
-  >
-    <div slot="actions" class="flex flex-wrap items-center gap-3 pt-2">
-      <WhatsAppButton
-        phoneNumber={settings.contact.whatsappNumber}
-        message={product.whatsappMessage}
-        label={product.enquiryLabel}
-        variant="primary"
-        size="lg"
+    description={product.summaryIntro ?? product.shortDescription}
+    highlights={product.highlights}
+    keyFacts={keyFacts}
+    optionNoteTitle="Supply Details to Confirm With Farm"
+    optionNoteText="Daily availability, milking/pickup times, handling state, unit container sizes, and current pricing are confirmed directly with MSV Goat Farm."
+    gallery={gallery}
+    whatsappNumber={settings.contact.whatsappNumber}
+    whatsappMessage={product.whatsappMessage}
+    whatsappLabel="Enquire for Milk Availability"
+    phoneDisplay={settings.contact.phoneDisplay}
+    phoneConfirmed={settings.contact.phoneConfirmed}
+    jumpLinks={jumpLinks}
+  />
+
+  <Section id="specifications" surface="main">
+    <div class="mx-auto max-w-5xl">
+      <ProductSpecsTable
+        title="Product Specifications &amp; Dairy Profile"
+        subtitle="General caprine dairy characteristics and farm enquiry scope for MSV Goat Farm in Theni."
+        rows={specRows}
       />
-      <Button href="/contact/" variant="secondary" size="lg">
-        <span>All Contact Options</span>
-      </Button>
+    </div>
+  </Section>
+
+  <Section id="milk-characteristics" surface="soft-green">
+    <div class="mx-auto mb-8 max-w-3xl text-center space-y-2.5">
+      <span class="inline-flex items-center rounded-full bg-white px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+        General Dairy Science Characteristics
+      </span>
+      <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
+        What Makes Goat Milk a Distinct Dairy Product
+      </h2>
+      <p class="m-0 text-sm sm:text-base text-[#58684C]">
+        These general physical characteristics describe caprine milk in dairy literature and are
+        shared for product clarity rather than medical or therapeutic claims.
+      </p>
     </div>
 
-    <figure
-      slot="media"
-      class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_18px_42px_-14px_rgba(67,86,58,0.18)] ring-1 ring-[#43563A]/10"
-    >
-      <img
-        src="/images/goat-milk/msv-goat-milk-product.webp"
-        srcset="/images/goat-milk/msv-goat-milk-product-800.webp 800w, /images/goat-milk/msv-goat-milk-product.webp 1200w"
-        sizes="(max-width: 1024px) 100vw, 42vw"
-        alt={product.image.alt}
-        width="1200"
-        height="900"
-        fetchpriority="high"
-        loading="eager"
-        decoding="async"
-        class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
-      />
-      <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
-        Illustrative product photograph representing farm-sourced goat milk.
-      </figcaption>
-    </figure>
-  </PageHero>
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        milkCharacteristics.map((item) => {
+          const Icon = item.icon;
+          return (
+            <article class="brand-card rounded-[1.25rem] bg-white p-6 ring-1 ring-[#43563A]/10 shadow-sm space-y-3">
+              <span class="inline-flex size-10 items-center justify-center rounded-xl bg-[#F4FBE9] text-[#438C38]">
+                <Icon class="size-5" aria-hidden="true" />
+              </span>
+              <h3 class="m-0 font-heading text-lg font-bold text-[#43563A]">{item.title}</h3>
+              <p class="m-0 text-sm leading-relaxed text-[#58684C]">{item.detail}</p>
+            </article>
+          );
+        })
+      }
+    </div>
+  </Section>
 
-  <Section surface="soft-green">
+  <Section id="sourcing-supply" surface="main" compact={true}>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <article class="brand-card rounded-[1.25rem] bg-white p-6 sm:p-8 ring-1 ring-[#43563A]/10 shadow-sm space-y-3">
+      <article class="rounded-[1.5rem] bg-white p-6 sm:p-8 ring-1 ring-[#43563A]/10 space-y-3">
+        <span class="text-xs font-heading font-bold uppercase tracking-wider text-[#438C38]">
+          Farm Sourcing Information
+        </span>
         <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
-          Direct Goat Milk Enquiries
+          Sourced From MSV Goat Farm in Theni
         </h2>
-        <p class="m-0 text-base leading-relaxed text-[#58684C]">
-          Because farm output varies, goat milk availability and enquiry details are confirmed
-          directly by speaking with MSV Goat Farm in Theni.
+        <p class="m-0 text-sm sm:text-base leading-relaxed text-[#58684C]">
+          Goat milk offered by MSV Goat Farm is sourced from the farm&rsquo;s own livestock setup in
+          Theni, where goats are kept in raised slatted-floor pens with open-sided ventilation and
+          aisle green fodder feeding.
         </p>
-        <ul class="m-0 list-none space-y-2.5 p-0 pt-2 text-sm text-[#58684C]">
-          <li class="flex items-start gap-2.5">
-            <CheckCircle2 class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
-            <span>Confirm current availability directly before planning a visit.</span>
-          </li>
-          <li class="flex items-start gap-2.5">
-            <CheckCircle2 class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
-            <span>Direct farm-to-buyer communication via WhatsApp or telephone.</span>
-          </li>
-        </ul>
       </article>
 
-      <article class="brand-card rounded-[1.25rem] bg-white p-6 sm:p-8 ring-1 ring-[#43563A]/10 shadow-sm flex flex-col justify-between gap-5">
-        <div class="space-y-3">
-          <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
-            Explore Other Farm Products
-          </h2>
-          <p class="m-0 text-base leading-relaxed text-[#58684C]">
-            MSV Goat Farm also offers:
-          </p>
-          <ul class="m-0 list-none space-y-2 p-0 text-sm">
-            <li>
-              <a
-                href="/live-goats-for-sale-theni/"
-                class="font-heading font-bold text-[#438C38] no-underline hover:underline"
-              >
-                Live Goats for Sale in Theni &rarr;
-              </a>
-            </li>
-            <li>
-              <a
-                href="/uppukandam-theni/"
-                class="font-heading font-bold text-[#438C38] no-underline hover:underline"
-              >
-                Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>) in Theni &rarr;
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="pt-2 border-t border-[#43563A]/10 flex items-center gap-2 text-xs text-[#58684C]">
-          <MessageCircle class="size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
-          <span>Opening WhatsApp lets you review and send your prefilled message directly.</span>
-        </div>
+      <article class="rounded-[1.5rem] bg-white p-6 sm:p-8 ring-1 ring-[#43563A]/10 space-y-3">
+        <span class="text-xs font-heading font-bold uppercase tracking-wider text-[#438C38]">
+          Availability &amp; Supply Information
+        </span>
+        <h2 class="m-0 font-heading text-2xl font-bold text-[#43563A]">
+          Supply Varies With Herd Lactation Cycles
+        </h2>
+        <p class="m-0 text-sm sm:text-base leading-relaxed text-[#58684C]">
+          Because goat milk output depends on active milking does and natural lactation periods,
+          daily volume and availability are not fixed year-round. Contact +91 95246 95724 before
+          planning a pickup in Theni.
+        </p>
       </article>
     </div>
   </Section>
 
-  <Section surface="main">
+  <Section id="buyer-checklist" surface="surface">
+    <div class="mx-auto mb-8 max-w-3xl text-center space-y-2.5">
+      <span class="inline-flex items-center rounded-full bg-[#F4FBE9] px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+        Buyer Confirmation Checklist
+      </span>
+      <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
+        Questions Customers Should Confirm Before Purchasing
+      </h2>
+      <p class="m-0 text-sm sm:text-base text-[#58684C]">
+        Verify handling, container options, price, and collection timings directly with MSV Goat Farm:
+      </p>
+    </div>
+
+    <InfoChecklist items={confirmationChecklist} columns={3} />
+  </Section>
+
+  <RelatedProductsSection
+    currentId="goat-milk"
+    products={allProducts}
+    whatsappNumber={settings.contact.whatsappNumber}
+  />
+
+  <Section id="faqs" surface="main">
     <div class="mx-auto max-w-3xl">
       <h2 class="m-0 mb-6 text-center font-heading text-3xl font-extrabold text-[#43563A]">
-        Goat Milk Enquiry FAQs
+        Goat Milk FAQs
       </h2>
       <FaqAccordion items={faqs} />
     </div>

@@ -1,0 +1,38 @@
+---
+import { ArrowRight } from 'lucide-astro';
+import Section from '../common/Section.astro';
+import Button from '../common/Button.astro';
+---
+
+<Section id="farm-overview" surface="surface" compact={true} class="border-b border-[#43563A]/8">
+  <div class="grid grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-10">
+    <div class="space-y-2 lg:col-span-4">
+      <span class="inline-flex items-center rounded-full bg-[#F4FBE9] px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+        Theni Livestock &amp; Farm Produce
+      </span>
+      <h2 class="m-0 font-heading text-2xl sm:text-3xl font-extrabold text-[#43563A]">
+        What MSV Goat Farm Does in Theni
+      </h2>
+    </div>
+
+    <div class="space-y-3 lg:col-span-5">
+      <p class="m-0 text-sm sm:text-base leading-relaxed text-[#58684C]">
+        Situated in a rural hillside compound in Theni, Tamil Nadu, MSV Goat Farm houses goats inside
+        an elevated slatted-floor shed designed for natural cross-ventilation and organised aisle feeding.
+      </p>
+      <p class="m-0 text-sm sm:text-base leading-relaxed text-[#58684C]">
+        Customers in and around Theni can review our livestock housing, learn about goat selection,
+        traditional dried goat meat (<span lang="ta">உப்புக்கண்டம்</span>), and goat milk
+        characteristics, and speak directly with the farm owner regarding current availability.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-3 lg:col-span-3 lg:justify-end">
+      <Button href="/about/" variant="secondary">
+        <span>Explore Farm Setup</span>
+        <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
+      </Button>
+    </div>
+  </div>
+</Section>
+

@@ -1,0 +1,179 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { ClipboardCheck, HelpCircle, Info } from 'lucide-astro';
+import WhatsAppButton from '../common/WhatsAppButton.astro';
+import Button from '../common/Button.astro';
+
+export interface Props {
+  breeds: CollectionEntry<'breeds'>[];
+  whatsappNumber: string;
+  showGuideLink?: boolean;
+}
+
+const { breeds, whatsappNumber, showGuideLink = false } = Astro.props;
+const confirmedBreeds = breeds.filter((entry) => entry.data.confirmed);
+
+const buyerVarietyTopics = [
+  {
+    title: 'Confirmed Breed or Cross Line',
+    detail:
+      'Ask the farm owner which breeds or crossbred lines are presently maintained in the shed.',
+  },
+  {
+    title: 'Age & Purpose Fit',
+    detail:
+      'Specify whether you are looking for young growing kids, breeding stock, or adult animals.',
+  },
+  {
+    title: 'Visual & Batch Verification',
+    detail:
+      'Request current photographs, videos, or a scheduled visit in Theni before deciding.',
+  },
+];
+---
+
+{
+  confirmedBreeds.length > 0 ? (
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {confirmedBreeds.map((entry) => {
+        const breed = entry.data;
+        const imageSrc = breed.image;
+        const imageSrc800 = imageSrc?.endsWith('.webp')
+          ? imageSrc.replace(/\.webp$/, '-800.webp')
+          : undefined;
+        return (
+          <article class="brand-card flex flex-col justify-between overflow-hidden rounded-[1.25rem] bg-white border border-[#43563A]/10 shadow-[0_10px_28px_-10px_rgba(67,86,58,0.12)]">
+            <div>
+              {imageSrc && (
+                <div class="aspect-[4/3] w-full overflow-hidden bg-[#F4FBE9]">
+                  <img
+                    src={imageSrc}
+                    srcset={imageSrc800 ? `${imageSrc800} 800w, ${imageSrc} 1200w` : undefined}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    alt={`${breed.name} goat variety at MSV Goat Farm in Theni`}
+                    width="1200"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                    class="size-full object-cover"
+                  />
+                </div>
+              )}
+
+              <div class="p-6 space-y-3">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <h3 class="m-0 font-heading text-xl font-bold text-[#43563A]">
+                    {breed.name}
+                    {breed.tamilName && (
+                      <span lang="ta" class="ml-1.5 text-sm font-semibold text-[#438C38]">
+                        ({breed.tamilName})
+                      </span>
+                    )}
+                  </h3>
+                  {breed.availabilityStatus && (
+                    <span class="rounded-full bg-[#F4FBE9] px-3 py-0.5 text-xs font-heading font-bold text-[#438C38] ring-1 ring-[#63A83E]/25">
+                      {breed.availabilityStatus}
+                    </span>
+                  )}
+                </div>
+
+                <p class="m-0 text-sm leading-relaxed text-[#58684C]">{breed.summary}</p>
+
+                <dl class="m-0 space-y-2 pt-2 border-t border-[#43563A]/8 text-xs sm:text-sm">
+                  {breed.appearance && (
+                    <div>
+                      <dt class="inline font-semibold text-[#43563A]">Appearance: </dt>
+                      <dd class="m-0 inline text-[#58684C]">{breed.appearance}</dd>
+                    </div>
+                  )}
+                  {breed.characteristics && (
+                    <div>
+                      <dt class="inline font-semibold text-[#43563A]">Characteristics: </dt>
+                      <dd class="m-0 inline text-[#58684C]">{breed.characteristics}</dd>
+                    </div>
+                  )}
+                  {breed.commonPurpose && (
+                    <div>
+                      <dt class="inline font-semibold text-[#43563A]">Common Purpose: </dt>
+                      <dd class="m-0 inline text-[#58684C]">{breed.commonPurpose}</dd>
+                    </div>
+                  )}
+                  {breed.generalInfo && (
+                    <div>
+                      <dt class="inline font-semibold text-[#43563A]">Notes: </dt>
+                      <dd class="m-0 inline text-[#58684C]">{breed.generalInfo}</dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
+            </div>
+
+            <div class="px-6 pb-6 pt-3 border-t border-[#43563A]/8">
+              <WhatsAppButton
+                phoneNumber={whatsappNumber}
+                message={
+                  breed.whatsappMessage ??
+                  `Hello MSV Goat Farm, I would like to ask about ${breed.name} goat availability in Theni.`
+                }
+                label={`Ask about ${breed.name}`}
+                variant="primary"
+                size="sm"
+                class="w-full"
+              />
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  ) : (
+    <div class="rounded-[1.5rem] bg-white p-6 sm:p-8 lg:p-10 ring-1 ring-[#43563A]/12 shadow-[0_12px_34px_-14px_rgba(67,86,58,0.14)] space-y-6">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="max-w-3xl space-y-2.5">
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-[#FFF1D5] px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#43563A] ring-1 ring-[#EFA45C]/35">
+            <Info class="size-3.5 text-[#EFA45C]" aria-hidden="true" />
+            <span>Breed List Pending Owner Confirmation</span>
+          </span>
+          <h3 class="m-0 font-heading text-2xl font-extrabold text-[#43563A]">
+            Goat Varieties Are Published Only After Direct Owner Verification
+          </h3>
+          <p class="m-0 text-sm sm:text-base leading-relaxed text-[#58684C]">
+            MSV Goat Farm maintains a varied herd inside its elevated shed in Theni, but individual
+            breed names and lineage records have not yet been published by the farm owner. To avoid
+            assumptions, specific breed cards will appear here only once confirmed by the farm.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3 shrink-0">
+          <WhatsAppButton
+            phoneNumber={whatsappNumber}
+            message="Hello MSV Goat Farm, which goat varieties or breeds are currently available at your Theni farm?"
+            label="Ask About Current Breeds"
+            variant="primary"
+          />
+          {showGuideLink && (
+            <Button href="/live-goats-for-sale-theni/" variant="secondary">
+              <span>Live Goats &amp; Selection Guide</span>
+            </Button>
+          )}
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3 pt-2 border-t border-[#43563A]/10">
+        {buyerVarietyTopics.map((topic, index) => (
+          <div class="rounded-2xl bg-[#FFFDF4] p-4 ring-1 ring-[#43563A]/8 space-y-1.5">
+            <div class="flex items-center gap-2">
+              {index === 0 ? (
+                <ClipboardCheck class="size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+              ) : (
+                <HelpCircle class="size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+              )}
+              <h4 class="m-0 font-heading text-sm font-bold text-[#43563A]">{topic.title}</h4>
+            </div>
+            <p class="m-0 text-xs sm:text-sm leading-relaxed text-[#58684C]">{topic.detail}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+

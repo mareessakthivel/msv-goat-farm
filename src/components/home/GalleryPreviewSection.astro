@@ -1,0 +1,80 @@
+---
+import { ArrowRight } from 'lucide-astro';
+import Section from '../common/Section.astro';
+import Button from '../common/Button.astro';
+
+const previewItems = [
+  {
+    src: '/images/farm/msv-elevated-shed-exterior-ramp.webp',
+    src800: '/images/farm/msv-elevated-shed-exterior-ramp-800.webp',
+    alt: 'Front exterior of elevated goat shed with wooden slatted ramp and open corrugated roof in Theni',
+    label: 'Elevated Shed & Ramp',
+  },
+  {
+    src: '/images/farm/msv-shed-interior-wooden-slats.webp',
+    src800: '/images/farm/msv-shed-interior-wooden-slats-800.webp',
+    alt: 'Central feeding walkway with raised slatted flooring and galvanized feed troughs inside the shed',
+    label: 'Slatted Aisle & Troughs',
+  },
+  {
+    src: '/images/live-goats/live-goats-elevated-shed.webp',
+    src800: '/images/live-goats/live-goats-elevated-shed-800.webp',
+    alt: 'Goats standing inside elevated slatted pens with metal rail dividers at MSV Goat Farm',
+    label: 'Raised Pen Environment',
+  },
+  {
+    src: '/images/uppukandam/msv-traditional-uppukandam.webp',
+    src800: '/images/uppukandam/msv-traditional-uppukandam-800.webp',
+    alt: 'Traditional dried goat meat Uppukandam served on a green banana leaf in natural daylight',
+    label: 'Traditional Uppukandam',
+  },
+];
+---
+
+<Section id="gallery-preview" surface="main" class="reveal-on-scroll">
+  <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div class="max-w-2xl space-y-2">
+      <span class="inline-flex items-center rounded-full bg-[#F4FBE9] px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+        Visual Farm Preview
+      </span>
+      <h2 class="m-0 font-heading text-3xl sm:text-4xl font-extrabold text-[#43563A]">
+        Inside MSV Goat Farm &amp; Products
+      </h2>
+      <p class="m-0 text-base text-[#58684C]">
+        Illustrative visuals reflecting the farm&rsquo;s elevated shed structure in Theni alongside
+        live goats, Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>), and goat milk.
+      </p>
+    </div>
+
+    <Button href="/gallery/" variant="secondary" class="self-start sm:self-auto shrink-0">
+      <span>View Full Gallery</span>
+      <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
+    </Button>
+  </div>
+
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      previewItems.map((item) => (
+        <figure class="brand-card m-0 overflow-hidden rounded-[1.25rem] bg-white border border-[#43563A]/10 shadow-[0_8px_24px_-10px_rgba(67,86,58,0.10)]">
+          <div class="aspect-[4/3] w-full overflow-hidden bg-[#F4FBE9]">
+            <img
+              src={item.src}
+              srcset={`${item.src800} 800w, ${item.src} 1200w`}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              alt={item.alt}
+              width="1200"
+              height="900"
+              loading="lazy"
+              decoding="async"
+              class="size-full object-cover"
+            />
+          </div>
+          <figcaption class="px-4 py-3 text-sm font-heading font-bold text-[#43563A]">
+            {item.label}
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</Section>
+

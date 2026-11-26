@@ -1,13 +1,19 @@
 ---
+import { ArrowRight } from 'lucide-astro';
 import Section from '../common/Section.astro';
+import Button from '../common/Button.astro';
 import ProductCard from '../products/ProductCard.astro';
 
 export interface ProductItem {
   id: string;
   name: string;
   tamilName?: string;
+  categoryLabel?: string;
+  locationLabel?: string;
   href: string;
   shortDescription: string;
+  highlights?: string[];
+  exploreLabel?: string;
   enquiryLabel: string;
   whatsappMessage: string;
   image: {
@@ -28,14 +34,14 @@ const { products, whatsappNumber } = Astro.props;
 <Section id="products" surface="main" class="reveal-on-scroll">
   <div class="mx-auto mb-10 max-w-2xl text-center space-y-3">
     <span class="inline-flex items-center rounded-full bg-[#F4FBE9] px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
-      Confirmed Farm Offerings
+      Featured Farm Products
     </span>
     <h2 class="m-0 font-heading text-3xl sm:text-4xl font-extrabold text-[#43563A]">
       Our Products from Theni
     </h2>
     <p class="m-0 text-base text-[#58684C]">
-      All orders and enquiries are handled directly via WhatsApp or telephone with MSV Goat Farm —
-      no online cart or public price list.
+      Explore live goats for sale, traditional cured Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>),
+      and farm-sourced goat milk from MSV Goat Farm.
     </p>
   </div>
 
@@ -45,8 +51,12 @@ const { products, whatsappNumber } = Astro.props;
         <ProductCard
           name={product.name}
           tamilName={product.tamilName}
+          categoryLabel={product.categoryLabel}
+          locationLabel={product.locationLabel}
           description={product.shortDescription}
+          highlights={product.highlights}
           href={product.href}
+          exploreLabel={product.exploreLabel}
           enquiryLabel={product.enquiryLabel}
           whatsappNumber={whatsappNumber}
           whatsappMessage={product.whatsappMessage}
@@ -58,5 +68,19 @@ const { products, whatsappNumber } = Astro.props;
       ))
     }
   </div>
-</Section>
 
+  <div class="mt-8 flex flex-col items-center justify-between gap-4 rounded-[1.25rem] bg-[#F4FBE9] px-6 py-5 ring-1 ring-[#63A83E]/20 sm:flex-row">
+    <div class="space-y-1 text-center sm:text-left">
+      <p class="m-0 font-heading text-lg font-bold text-[#43563A]">
+        Looking for full product specifications and buyer checklists?
+      </p>
+      <p class="m-0 text-sm text-[#58684C]">
+        Browse our dedicated product catalogue page for side-by-side product details.
+      </p>
+    </div>
+    <Button href="/products/" variant="primary" class="shrink-0">
+      <span>View Full Products Catalogue</span>
+      <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
+    </Button>
+  </div>
+</Section>

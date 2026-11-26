@@ -1,0 +1,294 @@
+---
+import { Check, MapPin, Phone, ShieldCheck } from 'lucide-astro';
+import { buildPhoneHref } from '../../utils/whatsapp';
+import Breadcrumbs, { type BreadcrumbItem } from '../common/Breadcrumbs.astro';
+import Button from '../common/Button.astro';
+import WhatsAppButton from '../common/WhatsAppButton.astro';
+
+export interface GalleryThumb {
+  src: string;
+  src800?: string;
+  alt: string;
+  caption: string;
+  label: string;
+}
+
+export interface KeyFactPill {
+  label: string;
+  value: string;
+}
+
+export interface JumpLink {
+  label: string;
+  href: string;
+}
+
+export interface Props {
+  breadcrumbs: BreadcrumbItem[];
+  eyebrow: string;
+  title: string;
+  tamilSubtitle?: string;
+  description: string;
+  highlights: string[];
+  keyFacts: KeyFactPill[];
+  optionNoteTitle: string;
+  optionNoteText: string;
+  gallery: GalleryThumb[];
+  whatsappNumber: string;
+  whatsappMessage: string;
+  whatsappLabel?: string;
+  phoneDisplay: string;
+  phoneConfirmed: boolean;
+  jumpLinks?: JumpLink[];
+}
+
+const {
+  breadcrumbs,
+  eyebrow,
+  title,
+  tamilSubtitle,
+  description,
+  highlights,
+  keyFacts,
+  optionNoteTitle,
+  optionNoteText,
+  gallery,
+  whatsappNumber,
+  whatsappMessage,
+  whatsappLabel = 'Enquire for Price & Availability',
+  phoneDisplay,
+  phoneConfirmed,
+  jumpLinks = [],
+} = Astro.props;
+
+const primary = gallery[0];
+const phoneHref = phoneConfirmed ? buildPhoneHref(phoneDisplay) : null;
+---
+
+<section class="bg-hero-gradient border-b border-[#43563A]/10 px-4 pt-6 pb-10 sm:px-6 sm:pt-8 sm:pb-12 lg:px-8">
+  <div class="mx-auto max-w-[78rem]">
+    <Breadcrumbs items={breadcrumbs} />
+
+    <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-10">
+      <!-- Left Column: E-commerce Product Media Gallery -->
+      <div class="min-w-0 space-y-3 lg:col-span-6 lg:sticky lg:top-24" data-pdp-gallery>
+        <figure class="m-0 overflow-hidden rounded-[1.5rem] bg-white p-2 shadow-[0_20px_48px_-16px_rgba(67,86,58,0.20)] ring-1 ring-[#43563A]/10">
+          <div class="relative aspect-[4/3] w-full overflow-hidden rounded-[1.125rem] bg-[#F4FBE9]">
+            <img
+              data-pdp-main-img
+              src={primary.src}
+              srcset={primary.src800 ? `${primary.src800} 800w, ${primary.src} 1200w` : undefined}
+              sizes="(max-width: 1024px) 100vw, 48vw"
+              alt={primary.alt}
+              width="1200"
+              height="900"
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+              class="size-full object-cover transition-opacity duration-200"
+            />
+            <span class="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-[#FFFDF4]/95 px-3 py-1 text-xs font-heading font-bold text-[#438C38] shadow-sm ring-1 ring-[#43563A]/10">
+              <MapPin class="size-3.5" aria-hidden="true" />
+              <span>Theni, Tamil Nadu</span>
+            </span>
+          </div>
+          <figcaption data-pdp-caption class="px-3 pt-2.5 pb-1 text-xs text-[#58684C]">
+            {primary.caption}
+          </figcaption>
+        </figure>
+
+        {
+          gallery.length > 1 && (
+            <div class="grid grid-cols-3 gap-2.5 sm:gap-3" role="group" aria-label="Product gallery thumbnails">
+              {gallery.map((item, idx) => (
+                <button
+                  type="button"
+                  data-pdp-thumb
+                  data-src={item.src}
+                  data-srcset={item.src800 ? `${item.src800} 800w, ${item.src} 1200w` : ''}
+                  data-alt={item.alt}
+                  data-caption={item.caption}
+                  aria-pressed={idx === 0 ? 'true' : 'false'}
+                  class:list={[
+                    'group overflow-hidden rounded-xl bg-white p-1 text-left transition cursor-pointer ring-2',
+                    idx === 0
+                      ? 'ring-[#438C38] shadow-sm'
+                      : 'ring-[#43563A]/12 opacity-80 hover:opacity-100 hover:ring-[#63A83E]',
+                  ]}
+                >
+                  <div class="aspect-[4/3] w-full overflow-hidden rounded-lg bg-[#F4FBE9]">
+                    <img
+                      src={item.src800 ?? item.src}
+                      alt={item.label}
+                      width="400"
+                      height="300"
+                      loading="lazy"
+                      decoding="async"
+                      class="size-full object-cover"
+                    />
+                  </div>
+                  <span class="block truncate px-1 pt-1 pb-0.5 text-[11px] font-heading font-semibold text-[#43563A]">
+                    {item.label}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Right Column: E-commerce Product Summary & Action Buy Box -->
+      <div class="min-w-0 rounded-[1.5rem] bg-white p-6 sm:p-8 shadow-[0_18px_42px_-16px_rgba(67,86,58,0.16)] ring-1 ring-[#43563A]/10 space-y-5 lg:col-span-6">
+        <div class="space-y-2.5">
+          <span class="inline-flex items-center rounded-full bg-[#F4FBE9] px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+            {eyebrow}
+          </span>
+
+          <h1 class="m-0 font-heading text-[clamp(1.85rem,1.35rem+1.8vw,2.65rem)] font-extrabold leading-[1.15] text-[#43563A]">
+            {title}
+            {
+              tamilSubtitle && (
+                <span lang="ta" class="mt-1 block text-[0.72em] font-bold text-[#438C38]">
+                  {tamilSubtitle}
+                </span>
+              )
+            }
+          </h1>
+
+          <p class="m-0 text-sm sm:text-base leading-relaxed text-[#58684C]">
+            {description}
+          </p>
+        </div>
+
+        <!-- E-commerce Key Specs Pill Grid -->
+        <dl class="m-0 grid grid-cols-2 gap-2.5 sm:gap-3 pt-1">
+          {
+            keyFacts.map((fact) => (
+              <div class="rounded-xl bg-[#FFFDF4] px-3.5 py-2.5 ring-1 ring-[#43563A]/10">
+                <dt class="text-[11px] font-heading font-bold uppercase tracking-wider text-[#58684C]">
+                  {fact.label}
+                </dt>
+                <dd class="m-0 mt-0.5 font-heading text-xs sm:text-sm font-bold text-[#43563A]">
+                  {fact.value}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <!-- Product Highlights -->
+        <div class="space-y-2 pt-1 border-t border-[#43563A]/10">
+          <h2 class="m-0 pt-2 font-heading text-sm font-bold uppercase tracking-wider text-[#43563A]">
+            Product Highlights
+          </h2>
+          <ul class="m-0 list-none space-y-2 p-0 text-sm text-[#58684C]">
+            {
+              highlights.map((item) => (
+                <li class="flex items-start gap-2.5">
+                  <Check class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Buyer Options / What to Confirm Note -->
+        <div class="rounded-xl bg-[#F4FBE9] px-4 py-3.5 ring-1 ring-[#63A83E]/25 space-y-1">
+          <p class="m-0 font-heading text-xs font-bold uppercase tracking-wider text-[#438C38]">
+            {optionNoteTitle}
+          </p>
+          <p class="m-0 text-xs sm:text-sm leading-relaxed text-[#43563A]">
+            {optionNoteText}
+          </p>
+        </div>
+
+        <!-- Direct Purchase / Enquiry Action Box -->
+        <div class="space-y-3 pt-1">
+          <div class="flex flex-wrap items-center gap-3">
+            <WhatsAppButton
+              phoneNumber={whatsappNumber}
+              message={whatsappMessage}
+              label={whatsappLabel}
+              variant="primary"
+              size="lg"
+              class="flex-1 sm:flex-initial"
+            />
+            {
+              phoneHref && (
+                <Button href={phoneHref} variant="gold" size="lg" class="flex-1 sm:flex-initial">
+                  <Phone class="size-4 shrink-0" aria-hidden="true" />
+                  <span>Call {phoneDisplay}</span>
+                </Button>
+              )
+            }
+          </div>
+
+          <p class="m-0 flex items-center gap-2 text-xs text-[#58684C]">
+            <ShieldCheck class="size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+            <span>Direct farm communication from MSV Goat Farm, Theni &bull; Pricing &amp; current availability confirmed on enquiry.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {
+      jumpLinks.length > 0 && (
+        <nav
+          aria-label="Product details sections"
+          class="mt-8 flex flex-wrap items-center gap-2 rounded-2xl bg-white/90 px-4 py-3 shadow-sm ring-1 ring-[#43563A]/10"
+        >
+          <span class="mr-1 text-xs font-heading font-bold uppercase tracking-wider text-[#58684C]">
+            Jump to:
+          </span>
+          {jumpLinks.map((link) => (
+            <a
+              href={link.href}
+              class="inline-flex min-h-[36px] items-center rounded-full bg-[#FFFDF4] px-3.5 py-1 text-xs sm:text-sm font-heading font-semibold text-[#43563A] ring-1 ring-[#43563A]/12 no-underline transition-colors hover:bg-[#F4FBE9] hover:text-[#438C38]"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      )
+    }
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-pdp-gallery]').forEach((galleryRoot) => {
+    const mainImg = galleryRoot.querySelector<HTMLImageElement>('[data-pdp-main-img]');
+    const captionEl = galleryRoot.querySelector<HTMLElement>('[data-pdp-caption]');
+    const thumbs = galleryRoot.querySelectorAll<HTMLButtonElement>('[data-pdp-thumb]');
+
+    if (!mainImg || thumbs.length === 0) return;
+
+    thumbs.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const src = btn.getAttribute('data-src');
+        const srcset = btn.getAttribute('data-srcset');
+        const alt = btn.getAttribute('data-alt');
+        const caption = btn.getAttribute('data-caption');
+
+        if (src) mainImg.setAttribute('src', src);
+        if (srcset) {
+          mainImg.setAttribute('srcset', srcset);
+        } else {
+          mainImg.removeAttribute('srcset');
+        }
+        if (alt) mainImg.setAttribute('alt', alt);
+        if (captionEl && caption) captionEl.textContent = caption;
+
+        thumbs.forEach((other) => {
+          const active = other === btn;
+          other.setAttribute('aria-pressed', active ? 'true' : 'false');
+          other.classList.toggle('ring-[#438C38]', active);
+          other.classList.toggle('shadow-sm', active);
+          other.classList.toggle('ring-[#43563A]/12', !active);
+          other.classList.toggle('opacity-80', !active);
+        });
+      });
+    });
+  });
+</script>
+

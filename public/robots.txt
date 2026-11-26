@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://msvgoatfarm.pages.dev/sitemap-index.xml
-
+Sitemap: https://msv-goat-farm.websitedesign.workers.dev/sitemap-index.xml

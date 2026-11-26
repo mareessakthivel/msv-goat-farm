@@ -18,19 +18,21 @@
   },
   "navLinks": [
     { "label": "Home", "href": "/" },
-    { "label": "About", "href": "/about/" },
+    { "label": "Products", "href": "/products/" },
     { "label": "Live Goats", "href": "/live-goats-for-sale-theni/" },
     { "label": "Uppukandam", "href": "/uppukandam-theni/" },
     { "label": "Goat Milk", "href": "/goat-milk-theni/" },
+    { "label": "About", "href": "/about/" },
     { "label": "Gallery", "href": "/gallery/" },
     { "label": "Contact", "href": "/contact/" }
   ],
   "footerProductLinks": [
+    { "label": "All Products Catalogue", "href": "/products/" },
     { "label": "Live Goats for Sale", "href": "/live-goats-for-sale-theni/" },
     { "label": "Uppukandam (உப்புக்கண்டம்)", "href": "/uppukandam-theni/" },
     { "label": "Goat Milk", "href": "/goat-milk-theni/" },
-    { "label": "Farm Gallery", "href": "/gallery/" },
-    { "label": "About the Farm", "href": "/about/" }
+    { "label": "About the Farm", "href": "/about/" },
+    { "label": "Farm Gallery", "href": "/gallery/" }
   ],
   "footerLegalLinks": [
     { "label": "Privacy Policy", "href": "/privacy-policy/" },
@@ -38,20 +40,20 @@
   ],
   "faqs": [
     {
-      "question": "How do I check availability or enquire about products from MSV Goat Farm?",
-      "answer": "You can contact MSV Goat Farm directly via WhatsApp or telephone. Product pricing and current stock availability are shared directly during your enquiry rather than listed online."
+      "question": "What products are offered at MSV Goat Farm in Theni?",
+      "answer": "MSV Goat Farm focuses on three confirmed offerings: live goats reared on the farm, traditional dried goat meat — Uppukandam (உப்புக்கண்டம்), and farm-sourced goat milk."
     },
     {
-      "question": "What products are currently available at MSV Goat Farm?",
-      "answer": "Our confirmed farm offerings are live goats for sale, traditional dried goat meat — Uppukandam (உப்புக்கண்டம்), and goat milk, based in Theni, Tamil Nadu."
+      "question": "How are goats housed at MSV Goat Farm?",
+      "answer": "The farm uses an elevated shed structure built with raised wooden and perforated slatted floors, an open-sided corrugated roof with shade-netting for airflow, tubular pen dividers, and aisle feeding troughs."
     },
     {
-      "question": "Do you offer online checkout or home delivery?",
-      "answer": "There is no online shopping cart or online payment on this website. Please reach out on WhatsApp or telephone to discuss current availability and enquiry details directly with the farm."
+      "question": "What is Uppukandam (உப்புக்கண்டம்), and is it fresh meat?",
+      "answer": "Uppukandam is not fresh raw meat. It is a traditional Tamil salted, spiced, and dried goat meat preparation stored dry and typically pounded lightly before shallow-frying or adding to curries. Ask the farm owner about current batches, ingredients, and storage instructions."
     },
     {
-      "question": "Can I visit the goat farm in Theni before purchasing?",
-      "answer": "Farm visit details and timings can be confirmed directly with the farm owner via WhatsApp or phone prior to your visit."
+      "question": "How can I check current goat varieties, milk availability, or visit timings?",
+      "answer": "Because farm livestock varieties, milk output, and Uppukandam batches vary over time, message +91 95246 95724 on WhatsApp or call directly to confirm availability, prices, and visit arrangements in Theni."
     }
   ]
 }

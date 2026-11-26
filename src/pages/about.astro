@@ -1,6 +1,16 @@
 ---
-import { getEntry } from 'astro:content';
-import { ArrowRight, CheckCircle2, MapPin, MessageCircle, Warehouse } from 'lucide-astro';
+import { getCollection, getEntry } from 'astro:content';
+import {
+  ArrowRight,
+  CheckCircle2,
+  LayoutGrid,
+  MapPin,
+  MessageCircle,
+  Phone,
+  SunMedium,
+  Utensils,
+} from 'lucide-astro';
+import { buildPhoneHref } from '../utils/whatsapp';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/common/PageHero.astro';
 import Section from '../components/common/Section.astro';
@@ -10,56 +20,78 @@ import ContactCtaSection from '../components/home/ContactCtaSection.astro';
 
 const siteSettings = await getEntry('settings', 'site');
 const settings = siteSettings!.data;
+const products = (await getCollection('products'))
+  .map((entry) => entry.data)
+  .sort((a, b) => a.order - b.order);
+
+const phoneHref = settings.contact.phoneConfirmed
+  ? buildPhoneHref(settings.contact.phoneDisplay)
+  : null;
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about/' },
 ];
 
-const farmPillars = [
+const infrastructureCards = [
   {
-    icon: MapPin,
-    title: 'Based in Theni, Tamil Nadu',
-    text: 'MSV Goat Farm operates in Theni, serving direct buyer enquiries for live goats, Uppukandam (உப்புக்கண்டம்), and goat milk.',
+    icon: LayoutGrid,
+    title: 'Elevated Wooden & Slatted Flooring',
+    text: 'Raised pens built with wooden planks and perforated green plastic slatted panels elevate goats off the ground so waste drops below the platform.',
   },
   {
-    icon: Warehouse,
-    title: 'Elevated Shed Environment',
-    text: 'Raised slatted-floor pens with open-sided corrugated roofing, shade-netting, and aisle feeding troughs suited to local conditions.',
+    icon: SunMedium,
+    title: 'Open-Sided Corrugated Roof & Netting',
+    text: 'Steel truss roofing paired with perimeter green shade-netting and blue curtains provides shade and rain cover while allowing open cross-breeze.',
   },
   {
-    icon: MessageCircle,
-    title: 'Direct WhatsApp & Phone Enquiry',
-    text: 'Availability, stock updates, and product discussions are handled directly with the farm rather than through automated online carts.',
+    icon: Utensils,
+    title: 'Central Walkway & Aisle Feed Troughs',
+    text: 'Tubular metal pen railings border a central wooden aisle lined with galvanized half-round troughs holding chopped green fodder.',
   },
+];
+
+const generalCarePrinciples = [
+  'Keeping elevated floors dry and ventilated helps reduce dampness beneath hooves.',
+  'Elevated aisle feed troughs help prevent goats from stepping on or soiling green fodder.',
+  'Consistent airflow and shade-netted sides buffer heat inside enclosed stall-fed structures.',
+  'Clean drinking water, spacing, and regular observation remain core principles of goat husbandry.',
 ];
 ---
 
 <BaseLayout
-  title="About MSV Goat Farm | Goat Farm in Theni, Tamil Nadu"
-  description="Learn about MSV Goat Farm in Theni, Tamil Nadu — our elevated farm sheds, direct enquiry process, live goats, Uppukandam (உப்புக்கண்டம்), and goat milk."
+  title="About MSV Goat Farm in Theni | Infrastructure & Operations Overview"
+  description="About MSV Goat Farm in Theni, Tamil Nadu — elevated slatted-floor goat housing, wide wooden ramp, aisle feeding troughs, and our three confirmed farm offerings."
   ogImage="/images/farm/msv-elevated-shed-exterior-ramp.webp"
   heroPreloadImage="/images/farm/msv-elevated-shed-exterior-ramp.webp"
   breadcrumbs={breadcrumbs}
 >
   <PageHero
     breadcrumbs={breadcrumbs}
-    eyebrow="About MSV Goat Farm"
-    title="A Direct Enquiry Goat Farm in Theni, Tamil Nadu"
-    description="MSV Goat Farm connects buyers directly with our farm in Theni for live goats, traditional dried goat meat — Uppukandam (உப்புக்கண்டம்), and goat milk."
+    eyebrow="About MSV Goat Farm • Theni"
+    title="Elevated-Shed Goat Farming in Theni, Tamil Nadu"
+    description="MSV Goat Farm is a livestock farm in Theni operating with raised slatted-floor housing and three confirmed product categories: live goats for sale, traditional Uppukandam (உப்புக்கண்டம்), and goat milk."
   >
     <div slot="actions" class="flex flex-wrap items-center gap-3 pt-2">
+      <Button href="/products/" variant="primary" size="lg">
+        <span>Explore Products</span>
+        <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
+      </Button>
       <WhatsAppButton
         phoneNumber={settings.contact.whatsappNumber}
         message="Hello MSV Goat Farm, I would like to learn more about your farm in Theni."
         label="Enquire on WhatsApp"
-        variant="primary"
+        variant="secondary"
         size="lg"
       />
-      <Button href="/gallery/" variant="secondary" size="lg">
-        <span>View Farm Gallery</span>
-        <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
-      </Button>
+      {
+        phoneHref && (
+          <Button href={phoneHref} variant="gold" size="lg">
+            <Phone class="size-4 shrink-0" aria-hidden="true" />
+            <span>Call {settings.contact.phoneDisplay}</span>
+          </Button>
+        )
+      }
     </div>
 
     <figure
@@ -79,23 +111,36 @@ const farmPillars = [
         class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
       />
       <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
-        Illustrative exterior visualization modeled on MSV Goat Farm in Theni.
+        Illustrative exterior visualization modeled on MSV Goat Farm&rsquo;s elevated shed and wooden access ramp in Theni.
       </figcaption>
     </figure>
   </PageHero>
 
   <Section surface="main">
+    <div class="mx-auto mb-8 max-w-3xl text-center space-y-2.5">
+      <span class="inline-flex items-center rounded-full bg-[#F4FBE9] px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+        Farm Overview &amp; Infrastructure
+      </span>
+      <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
+        What Is Built at MSV Goat Farm in Theni
+      </h2>
+      <p class="m-0 text-sm sm:text-base text-[#58684C]">
+        The farm sits in a rural compound bordered by green fodder and palm trees with hills in the
+        distance. Visible farm structures follow an elevated stall-fed goat shed layout:
+      </p>
+    </div>
+
     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
       {
-        farmPillars.map((pillar) => {
-          const Icon = pillar.icon;
+        infrastructureCards.map((card) => {
+          const Icon = card.icon;
           return (
             <article class="brand-card rounded-[1.25rem] bg-white p-6 ring-1 ring-[#43563A]/10 shadow-[0_10px_28px_-10px_rgba(67,86,58,0.10)]">
               <span class="inline-flex size-11 items-center justify-center rounded-xl bg-[#F4FBE9] text-[#438C38] mb-4">
                 <Icon class="size-5" aria-hidden="true" />
               </span>
-              <h2 class="m-0 font-heading text-xl font-bold text-[#43563A]">{pillar.title}</h2>
-              <p class="m-0 mt-2 text-sm leading-relaxed text-[#58684C]">{pillar.text}</p>
+              <h3 class="m-0 font-heading text-xl font-bold text-[#43563A]">{card.title}</h3>
+              <p class="m-0 mt-2 text-sm leading-relaxed text-[#58684C]">{card.text}</p>
             </article>
           );
         })
@@ -111,7 +156,7 @@ const farmPillars = [
             src="/images/farm/msv-shed-interior-wooden-slats.webp"
             srcset="/images/farm/msv-shed-interior-wooden-slats-800.webp 800w, /images/farm/msv-shed-interior-wooden-slats.webp 1200w"
             sizes="(max-width: 1024px) 100vw, 50vw"
-            alt="Interior central aisle of the elevated goat shed with wooden slatted floors and feeding troughs"
+            alt="Interior central aisle of the elevated goat shed with wooden slatted floors and galvanized feeding troughs"
             width="1200"
             height="900"
             loading="lazy"
@@ -119,66 +164,96 @@ const farmPillars = [
             class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
           />
           <figcaption class="px-3 pt-2 pb-1 text-xs text-[#58684C]">
-            Illustrative interior visualization of the elevated slatted pens and feeding aisle.
+            Illustrative interior view of the raised wooden slatted deck, metal dividers, and aisle feeding troughs.
           </figcaption>
         </figure>
       </div>
 
       <div class="min-w-0 space-y-5 lg:col-span-6">
+        <span class="inline-flex items-center rounded-full bg-white px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
+          Feeding Setup &amp; Care Principles
+        </span>
         <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
-          Three Confirmed Farm Offerings
+          Feeding Arrangement &amp; Goat Care Context
         </h2>
-        <p class="m-0 text-base leading-relaxed text-[#58684C]">
-          Instead of automated online ordering or fixed online price lists, MSV Goat Farm focuses
-          on direct buyer communication across our three confirmed offerings:
+        <p class="m-0 text-sm sm:text-base leading-relaxed text-[#58684C]">
+          Inside the shed, half-round metal troughs run along the central aisle so chopped green
+          fodder is accessed through pen rails from raised slatted floors. These design choices align
+          with general stall-fed goat management principles:
         </p>
 
-        <ul class="m-0 list-none space-y-3 p-0">
-          <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/8">
-            <CheckCircle2 class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
-            <div>
-              <a
-                href="/live-goats-for-sale-theni/"
-                class="font-heading text-base font-bold text-[#43563A] no-underline hover:text-[#438C38]"
-              >
-                Live Goats for Sale in Theni &rarr;
-              </a>
-              <p class="m-0 mt-1 text-sm text-[#58684C]">
-                Check current herd availability and confirmed breed details directly by enquiry.
-              </p>
-            </div>
-          </li>
-
-          <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/8">
-            <CheckCircle2 class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
-            <div>
-              <a
-                href="/uppukandam-theni/"
-                class="font-heading text-base font-bold text-[#43563A] no-underline hover:text-[#438C38]"
-              >
-                Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>) in Theni &rarr;
-              </a>
-              <p class="m-0 mt-1 text-sm text-[#58684C]">
-                Traditional dried goat meat available by direct farm enquiry.
-              </p>
-            </div>
-          </li>
-
-          <li class="flex items-start gap-3 rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/8">
-            <CheckCircle2 class="mt-0.5 size-5 shrink-0 text-[#438C38]" aria-hidden="true" />
-            <div>
-              <a
-                href="/goat-milk-theni/"
-                class="font-heading text-base font-bold text-[#43563A] no-underline hover:text-[#438C38]"
-              >
-                Goat Milk in Theni &rarr;
-              </a>
-              <p class="m-0 mt-1 text-sm text-[#58684C]">
-                Confirm current goat milk availability and enquiry arrangements directly.
-              </p>
-            </div>
-          </li>
+        <ul class="m-0 list-none space-y-2.5 p-0 text-sm text-[#58684C]">
+          {
+            generalCarePrinciples.map((point) => (
+              <li class="flex items-start gap-2.5 rounded-2xl bg-white p-3.5 ring-1 ring-[#43563A]/8">
+                <CheckCircle2 class="mt-0.5 size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+                <span>{point}</span>
+              </li>
+            ))
+          }
         </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section surface="main">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
+      <div class="lg:col-span-7 space-y-4">
+        <span class="text-xs font-heading font-bold uppercase tracking-wider text-[#438C38]">
+          Farm Offerings
+        </span>
+        <h2 class="m-0 font-heading text-3xl font-extrabold text-[#43563A]">
+          Three Confirmed Offerings From MSV Goat Farm
+        </h2>
+        <div class="space-y-3">
+          {
+            products.map((product) => (
+              <div class="rounded-2xl bg-white p-4 ring-1 ring-[#43563A]/10 shadow-sm flex flex-col gap-1">
+                <a
+                  href={product.href}
+                  class="font-heading text-base font-bold text-[#43563A] no-underline hover:text-[#438C38]"
+                >
+                  {product.name}{' '}
+                  {product.tamilName && (
+                    <span lang="ta" class="text-sm font-semibold text-[#438C38]">
+                      ({product.tamilName})
+                    </span>
+                  )}{' '}
+                  &rarr;
+                </a>
+                <p class="m-0 text-sm text-[#58684C]">{product.shortDescription}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 rounded-[1.5rem] bg-[#F4FBE9] p-6 sm:p-8 ring-1 ring-[#63A83E]/25 flex flex-col justify-between gap-5">
+        <div class="space-y-3">
+          <span class="inline-flex items-center gap-1.5 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38]">
+            <MessageCircle class="size-4" aria-hidden="true" />
+            <span>Direct Communication</span>
+          </span>
+          <h2 class="m-0 font-heading text-2xl font-extrabold text-[#43563A]">
+            Speak With the Farm Directly
+          </h2>
+          <p class="m-0 text-sm sm:text-base leading-relaxed text-[#58684C]">
+            Specific details not published online — including exact village directions in Theni,
+            visiting hours, breed varieties, feeding schedules, milk volume, and Uppukandam pack
+            options — can be confirmed directly with the farm owner at{' '}
+            <strong class="text-[#43563A]">{settings.contact.phoneDisplay}</strong>.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <Button href="/gallery/" variant="secondary">
+            <span>View Farm Gallery</span>
+            <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
+          </Button>
+          <Button href="/contact/" variant="primary">
+            <span>Contact Details</span>
+          </Button>
+        </div>
       </div>
     </div>
   </Section>
@@ -189,4 +264,3 @@ const farmPillars = [
     phoneConfirmed={settings.contact.phoneConfirmed}
   />
 </BaseLayout>
-

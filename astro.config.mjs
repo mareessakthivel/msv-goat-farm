@@ -3,8 +3,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  // Confirmed Cloudflare Pages production domain
-  site: 'https://msvgoatfarm.pages.dev',
+  // Confirmed live Cloudflare Workers production domain
+  site: 'https://msv-goat-farm.websitedesign.workers.dev',
   trailingSlash: 'always',
   integrations: [
     tailwind({

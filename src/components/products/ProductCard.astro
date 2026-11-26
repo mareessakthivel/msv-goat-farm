@@ -1,12 +1,17 @@
 ---
-import { ArrowRight, Camera } from 'lucide-astro';
+import { ArrowRight, Camera, Check, MapPin } from 'lucide-astro';
 import WhatsAppButton from '../common/WhatsAppButton.astro';
 
 export interface Props {
   name: string;
   tamilName?: string;
+  categoryLabel?: string;
+  locationLabel?: string;
   description: string;
+  summaryIntro?: string;
+  highlights?: string[];
   href: string;
+  exploreLabel?: string;
   enquiryLabel: string;
   whatsappNumber: string;
   whatsappMessage: string;
@@ -14,13 +19,19 @@ export interface Props {
   imageAlt: string;
   placeholderLabel?: string;
   wideOnTablet?: boolean;
+  showExtended?: boolean;
 }
 
 const {
   name,
   tamilName,
+  categoryLabel,
+  locationLabel,
   description,
+  summaryIntro,
+  highlights = [],
   href,
+  exploreLabel = 'Explore Details',
   enquiryLabel,
   whatsappNumber,
   whatsappMessage,
@@ -28,6 +39,7 @@ const {
   imageAlt,
   placeholderLabel,
   wideOnTablet = false,
+  showExtended = false,
 } = Astro.props;
 
 const imageSrc800 = imageSrc ? imageSrc.replace(/\.webp$/, '-800.webp') : undefined;
@@ -83,11 +95,28 @@ const imageSrc800 = imageSrc ? imageSrc.replace(/\.webp$/, '-800.webp') : undefi
         </div>
       )
     }
+
+    {
+      categoryLabel && (
+        <span class="absolute left-3 top-3 inline-flex rounded-full bg-[#FFFDF4]/95 px-3 py-1 text-[11px] font-heading font-bold uppercase tracking-wider text-[#438C38] shadow-sm ring-1 ring-[#43563A]/10 backdrop-blur-sm">
+          {categoryLabel}
+        </span>
+      )
+    }
   </div>
 
   <div class="flex flex-1 flex-col justify-between p-6">
     <div>
-      <div class="mb-2 flex flex-wrap items-baseline gap-2">
+      {
+        locationLabel && (
+          <p class="m-0 mb-1.5 inline-flex items-center gap-1 text-xs font-medium text-[#58684C]">
+            <MapPin class="size-3.5 text-[#438C38]" aria-hidden="true" />
+            <span>{locationLabel}</span>
+          </p>
+        )
+      }
+
+      <div class="mb-2.5 flex flex-wrap items-baseline gap-2">
         <h3 class="m-0 font-heading text-xl font-bold text-[#43563A]">{name}</h3>
         {
           tamilName && (
@@ -101,12 +130,40 @@ const imageSrc800 = imageSrc ? imageSrc.replace(/\.webp$/, '-800.webp') : undefi
         }
       </div>
 
-      <p class="m-0 mb-5 text-[0.9375rem] leading-relaxed text-[#58684C]">
+      <p class="m-0 text-[0.9375rem] leading-relaxed text-[#58684C]">
         {description}
       </p>
+
+      {
+        showExtended && summaryIntro && (
+          <p class="m-0 mt-2.5 text-sm leading-relaxed text-[#58684C]">
+            {summaryIntro}
+          </p>
+        )
+      }
+
+      {
+        highlights.length > 0 && (
+          <ul class="m-0 mt-4 mb-5 list-none space-y-1.5 p-0 text-xs sm:text-[0.8125rem] text-[#43563A]">
+            {highlights.map((item) => (
+              <li class="flex items-start gap-2">
+                <Check class="mt-0.5 size-3.5 shrink-0 text-[#438C38]" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </div>
 
-    <div class="flex flex-wrap items-center gap-3 pt-2 border-t border-[#43563A]/8">
+    <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-[#43563A]/8">
+      <a
+        href={href}
+        class="inline-flex min-h-[44px] flex-1 sm:flex-initial items-center justify-center gap-1.5 rounded-full border border-[#438C38]/30 bg-[#F4FBE9] px-4 py-2 text-sm font-heading font-bold text-[#43563A] no-underline transition-colors hover:border-[#438C38] hover:bg-[#E7F6D3]"
+      >
+        <span>{exploreLabel}</span>
+        <ArrowRight class="size-4 shrink-0 text-[#438C38]" aria-hidden="true" />
+      </a>
       <WhatsAppButton
         phoneNumber={whatsappNumber}
         message={whatsappMessage}
@@ -115,13 +172,6 @@ const imageSrc800 = imageSrc ? imageSrc.replace(/\.webp$/, '-800.webp') : undefi
         size="sm"
         class="flex-1 sm:flex-initial"
       />
-      <a
-        href={href}
-        class="inline-flex min-h-[44px] items-center gap-1.5 px-2 text-sm font-heading font-bold text-[#438C38] no-underline hover:text-[#35732C]"
-      >
-        <span>Details</span>
-        <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
-      </a>
     </div>
   </div>
 </article>

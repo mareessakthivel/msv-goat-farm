@@ -1,5 +1,5 @@
 ---
-import { ArrowDownRight, MapPin, Phone } from 'lucide-astro';
+import { ArrowRight, MapPin, Phone } from 'lucide-astro';
 import { buildPhoneHref } from '../../utils/whatsapp';
 import Button from '../common/Button.astro';
 import WhatsAppButton from '../common/WhatsAppButton.astro';
@@ -19,32 +19,32 @@ const phoneHref = phoneConfirmed ? buildPhoneHref(phoneDisplay) : null;
     <div class="min-w-0 space-y-6 lg:col-span-6">
       <div class="inline-flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-[#43563A] shadow-sm ring-1 ring-[#63A83E]/25">
         <MapPin class="size-4 text-[#438C38]" aria-hidden="true" />
-        <span>MSV Goat Farm &bull; Theni, Tamil Nadu</span>
+        <span>Goat Farm in Theni, Tamil Nadu</span>
       </div>
 
       <h1 class="m-0 font-heading text-[clamp(2.125rem,1.5rem+2.5vw,3.35rem)] font-extrabold leading-[1.12] tracking-tight text-[#43563A]">
-        Farm-Raised Live Goats, Uppukandam &amp; Goat Milk in Theni
+        Elevated-Shed Goat Farming, Live Goats &amp; Uppukandam in Theni
       </h1>
 
       <p class="m-0 max-w-xl text-base sm:text-lg leading-relaxed text-[#58684C]">
-        Welcome to <strong class="font-semibold text-[#43563A]">MSV Goat Farm</strong> in Theni,
-        Tamil Nadu. Connect with us directly on WhatsApp or by telephone to enquire about live
-        goats for sale, traditional Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>), and goat milk.
+        <strong class="font-semibold text-[#43563A]">MSV Goat Farm</strong> rears goats in
+        open-sided raised slatted-floor sheds in Theni, Tamil Nadu, offering live goats for sale,
+        traditional Uppukandam (<span lang="ta">உப்புக்கண்டம்</span>), and farm-sourced goat milk.
       </p>
 
       <div class="flex flex-wrap items-center gap-3.5 pt-1">
+        <Button href="/products/" variant="primary" size="lg">
+          <span>Explore All Products</span>
+          <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
+        </Button>
+
         <WhatsAppButton
           phoneNumber={whatsappNumber}
-          message="Hello MSV Goat Farm, I would like to enquire about your products in Theni."
+          message="Hello MSV Goat Farm, I would like to ask about your farm products in Theni."
           label="Enquire on WhatsApp"
-          variant="primary"
+          variant="secondary"
           size="lg"
         />
-
-        <Button href="#products" variant="secondary" size="lg">
-          <span>Explore Products</span>
-          <ArrowDownRight class="size-4 shrink-0" aria-hidden="true" />
-        </Button>
 
         {
           phoneHref && (
@@ -59,7 +59,7 @@ const phoneHref = phoneConfirmed ? buildPhoneHref(phoneDisplay) : null;
       <dl class="m-0 grid grid-cols-3 gap-2 sm:gap-3 pt-4 border-t border-[#43563A]/12 max-w-lg">
         <div class="min-w-0 rounded-xl bg-white/75 px-2.5 py-2 sm:px-3.5 sm:py-2.5 ring-1 ring-[#43563A]/8">
           <dt class="truncate text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#58684C]">
-            Primary Offer
+            Livestock
           </dt>
           <dd class="m-0 mt-0.5 truncate font-heading text-xs sm:text-sm font-bold text-[#43563A]">
             Live Goats
@@ -67,7 +67,7 @@ const phoneHref = phoneConfirmed ? buildPhoneHref(phoneDisplay) : null;
         </div>
         <div class="min-w-0 rounded-xl bg-white/75 px-2.5 py-2 sm:px-3.5 sm:py-2.5 ring-1 ring-[#43563A]/8">
           <dt class="truncate text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#58684C]">
-            Traditional
+            Dried Meat
           </dt>
           <dd class="m-0 mt-0.5 truncate font-heading text-xs sm:text-sm font-bold text-[#43563A]">
             Uppukandam
@@ -75,7 +75,7 @@ const phoneHref = phoneConfirmed ? buildPhoneHref(phoneDisplay) : null;
         </div>
         <div class="min-w-0 rounded-xl bg-white/75 px-2.5 py-2 sm:px-3.5 sm:py-2.5 ring-1 ring-[#43563A]/8">
           <dt class="truncate text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#58684C]">
-            Dairy
+            Farm Dairy
           </dt>
           <dd class="m-0 mt-0.5 truncate font-heading text-xs sm:text-sm font-bold text-[#43563A]">
             Goat Milk
@@ -99,10 +99,9 @@ const phoneHref = phoneConfirmed ? buildPhoneHref(phoneDisplay) : null;
           class="aspect-[16/9] w-full rounded-[1.125rem] object-cover"
         />
         <figcaption class="px-3 pt-2.5 pb-1 text-xs text-[#58684C]">
-          Illustrative farm visualization inspired by MSV Goat Farm&rsquo;s elevated shed setup in Theni, Tamil Nadu.
+          Illustrative farm visualization modeled on MSV Goat Farm&rsquo;s elevated shed setup in Theni, Tamil Nadu.
         </figcaption>
       </figure>
     </div>
   </div>
 </section>
-

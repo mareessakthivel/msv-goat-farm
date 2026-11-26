@@ -1,25 +1,26 @@
 ---
-import { LayoutGrid, SunMedium, Utensils } from 'lucide-astro';
+import { ArrowRight, LayoutGrid, SunMedium, Utensils } from 'lucide-astro';
 import Section from '../common/Section.astro';
+import Button from '../common/Button.astro';
 
 const facilityPoints = [
   {
     icon: LayoutGrid,
-    title: 'Elevated Slatted Pens',
+    title: 'Raised Wooden & Perforated Slatted Floors',
     description:
-      'Raised wooden and perforated slatted flooring paired with tubular metal pen partitions along central walkways.',
+      'Elevated slatted pens keep animals off the ground so waste drops below the platform, supporting cleaner hooves and drier resting surfaces.',
   },
   {
     icon: SunMedium,
-    title: 'Open-Sided Ventilation & Shade',
+    title: 'Open-Sided Roof & Shade-Netting',
     description:
-      'Corrugated truss roofing with side shade-netting allows natural daylight and cross-breeze across the shed.',
+      'A metal truss roof with corrugated sheets, perimeter shade-netting, and side curtains protects the shed from direct sun and rain while keeping air moving.',
   },
   {
     icon: Utensils,
-    title: 'Structured Trough & Rail Feeding',
+    title: 'Central Aisle & Galvanized Feed Troughs',
     description:
-      'Galvanized half-round feeding troughs along the aisle and elevated rail-mounted green fodder feeding arrangements.',
+      'Tubular steel pen dividers line a central walkway equipped with half-round galvanized troughs where chopped green fodder is fed cleanly.',
   },
 ];
 ---
@@ -40,7 +41,7 @@ const facilityPoints = [
           class="aspect-[4/3] w-full rounded-[1.125rem] object-cover"
         />
         <figcaption class="px-3 pt-2.5 pb-1 text-xs text-[#58684C]">
-          Illustrative interior view inspired by the central feeding aisle and raised wooden slats at MSV Goat Farm.
+          Illustrative interior view modeled on the central feeding aisle and raised wooden slats at MSV Goat Farm.
         </figcaption>
       </figure>
     </div>
@@ -48,14 +49,14 @@ const facilityPoints = [
     <div class="min-w-0 space-y-6 lg:col-span-6 order-1 lg:order-2">
       <div class="space-y-3">
         <span class="inline-flex items-center rounded-full bg-white/90 px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider text-[#438C38] ring-1 ring-[#63A83E]/25">
-          Farm Facilities &amp; Feeding Setup
+          Farm Infrastructure &amp; Housing
         </span>
         <h2 class="m-0 font-heading text-3xl sm:text-4xl font-extrabold text-[#43563A]">
-          Elevated Housing &amp; Organized Feeding Space
+          Elevated Goat Sheds Built for Theni Conditions
         </h2>
         <p class="m-0 text-base leading-relaxed text-[#58684C]">
-          The farm layout combines raised slatted-floor sheds with dedicated aisle troughs and open
-          natural ventilation suited to Theni&rsquo;s rural environment.
+          In commercial stall-fed goat farming across Tamil Nadu, raised platforms and open-sided
+          ventilation help keep pens dry and structured. Explore our visible shed layout in Theni.
         </p>
       </div>
 
@@ -81,7 +82,13 @@ const facilityPoints = [
           })
         }
       </div>
+
+      <div>
+        <Button href="/live-goats-for-sale-theni/" variant="secondary">
+          <span>Read Farm Housing &amp; Selection Guide</span>
+          <ArrowRight class="size-4 shrink-0" aria-hidden="true" />
+        </Button>
+      </div>
     </div>
   </div>
 </Section>
-
